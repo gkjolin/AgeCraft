@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RTS;
 
 public class Common : MonoBehaviour {
-	
+
 	// Float to bool
 	public static bool FloatToBool(float val) {
 		if (val < 0f)
@@ -24,6 +25,25 @@ public class Common : MonoBehaviour {
 		} else {
 			return false;
 		}
+	}
+
+	public static Vector2 CalculateMinimapPosFromWorldCoordinate(Vector3 pos){
+		
+		Terrain worldTerrain = GameObject.Find ("Ground").GetComponent<Terrain> ();
+
+		float xOffset = (pos.x / worldTerrain.terrainData.size.x) * (Screen.width * ResourceManager.MinimapSizeX);
+		float zOffset = (pos.z / worldTerrain.terrainData.size.z) * (Screen.height * ResourceManager.MinimapSizeZ);
+		
+		float minimapCenterX = (Screen.width * ResourceManager.MinimapOffsetX) + ((Screen.width * ResourceManager.MinimapSizeX) / 2);
+		float minimapCenterZ = Screen.height - ((Screen.height * ResourceManager.MinimapOffsetZ) + ((Screen.height * ResourceManager.MinimapSizeZ) / 2));
+
+		Vector2 result = new Vector2 (
+			minimapCenterX + xOffset,
+			minimapCenterZ - zOffset
+		);
+
+		return result;
+
 	}
 
 }

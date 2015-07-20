@@ -64,6 +64,42 @@ public class PlayerCamera : MonoBehaviour {
 //				Quaternion target = Quaternion.Euler(tiltAroundX, 0, 0);
 //				this.transform.rotation = Quaternion.Slerp(this.transform.rotation, target, Time.deltaTime * smooth);
 
+			} else{
+
+				// Get the current position
+				Vector3 currentPosition = this.transform.position;
+
+				// Move the camera to the boundary
+				if (
+					(Input.GetKey (KeyCode.UpArrow) || Input.mousePosition.y > (Screen.height - mouseScrollLimits.topLimit)) &&
+					currentPosition.z > cameraLimits.topLimit
+					)
+				{
+					currentPosition.z = cameraLimits.topLimit;
+				}
+				if (
+					(Input.GetKey (KeyCode.DownArrow) || Input.mousePosition.y < mouseScrollLimits.bottomLimit) &&
+					currentPosition.z < cameraLimits.bottomLimit
+					)
+				{
+					currentPosition.z = cameraLimits.bottomLimit;
+				}
+				if (
+					(Input.GetKey (KeyCode.LeftArrow) || Input.mousePosition.x < mouseScrollLimits.leftLimit) &&
+					currentPosition.x < cameraLimits.leftLimit
+					)
+				{
+					currentPosition.x = cameraLimits.leftLimit;
+				}
+				if (
+					(Input.GetKey (KeyCode.RightArrow) || Input.mousePosition.x > (Screen.width - mouseScrollLimits.rightLimit)) &&
+					currentPosition.x > cameraLimits.rightLimit
+					){
+					currentPosition.x = cameraLimits.rightLimit;
+				}
+				
+				this.transform.position = currentPosition;
+
 			}
 		}
 		
@@ -205,6 +241,10 @@ public class PlayerCamera : MonoBehaviour {
 		Vector3 desiredWorldPosition = this.transform.TransformPoint (desiredTranslation);
 
 		bool overBoundaries = false;
+		
+		Debug.Log ("Original: " + desiredTranslation);
+		Debug.Log ("Desired: " + desiredWorldPosition);
+		Debug.Log ("Limit: " + cameraLimits.bottomLimit);
 
 		// Check boundaries
 		if (desiredWorldPosition.x < cameraLimits.leftLimit)
@@ -219,6 +259,5 @@ public class PlayerCamera : MonoBehaviour {
 		return overBoundaries;
 
 	}
-	
 
 }

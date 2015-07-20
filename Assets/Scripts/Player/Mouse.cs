@@ -6,11 +6,11 @@ public class Mouse : MonoBehaviour {
 
 	// Private variables
 	private Camera playerCam;
+	private Camera miniCam;
 
 	// Ray cast mouse tracker
 	RaycastHit hit;
 	public GameObject target;
-	private float rayLength = 500;
 
 	public static Vector3 rightClickPoint;
 
@@ -49,124 +49,145 @@ public class Mouse : MonoBehaviour {
 	// Initialize camera
 	void Start() {
 		playerCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
+		miniCam = transform.root.FindChild ("MinimapCamera").GetComponent<Camera> ();
 	}
 
 	#region mouse
 	public void MouseTracker () {
-		
-		// Run selection methods
-		Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
 
-		// Allow the user to click anywhere on the terrain to move objects
-		if(Physics.Raycast(ray, out hit, rayLength, allowTerrainMouseClick)){
-			
-			// Temporary store the current mouse point
-			currentMousePoint = hit.point;
-			
-			// Store point at mouse button down
-			if(Input.GetMouseButtonDown(0)) {
-				
-				mouseDownPoint = hit.point;
-				timeLeftBeforeDeclareDrag = timeLimitBeforeDeclareDrag;
-				mouseDragStart = Input.mousePosition;
-				startedDrag = true;
+		// Check if right-clicking on minimap
+		if (Input.GetMouseButtonDown (1) && miniCam.pixelRect.Contains (Input.mousePosition)) {
+			// Clicking inside minimap viewport
 
-			} else if(Input.GetMouseButton(0)) {
-				// if the user is not dragging, lets do the tests
-				if(!userIsDragging) {
-					timeLeftBeforeDeclareDrag -= Time.deltaTime;
-					if(timeLeftBeforeDeclareDrag <= 0f || UserDraggingByPosition(mouseDragStart, Input.mousePosition)) {
-						userIsDragging = true;
-					}
+			// Run selection methods
+			Ray ray = miniCam.ScreenPointToRay (Input.mousePosition);
+			
+			// Allow the user to click anywhere on the terrain to move objects
+			if (Physics.Raycast (ray, out hit, ResourceManager.Raylength, allowTerrainMouseClick)) {
+
+				// Hitting the ground
+				if (hit.collider.name == "Ground") {
+					// Clicking in minimap
+					CreateMoveTarget(hit.point);
 				}
-				
-			} else if(Input.GetMouseButtonUp(0)){
-				
-				if(userIsDragging) {
-					finishedDragOnThisFrame = true;
-				}
-				userIsDragging = false;
 			}
 			
-			
-			// Mouse click
-			if(!userIsDragging) {
+		} else {
+
+			// Run selection methods
+			Ray ray = playerCam.ScreenPointToRay (Input.mousePosition);
+
+			// Allow the user to click anywhere on the terrain to move objects
+			if (Physics.Raycast (ray, out hit, ResourceManager.Raylength)) {
+
+				// Temporary store the current mouse point
+				currentMousePoint = hit.point;
 				
-				if(hit.collider.name == "Ground") {
-					// Hitting the terrain
-					if(Input.GetMouseButtonDown(1)) {
-						GameObject TargetObj = Instantiate(target, hit.point, Quaternion.identity) as GameObject;
-						TargetObj.name = "target";
-
-						// Store the rightclick point
-						rightClickPoint = hit.point;
-
-					} else if(Input.GetMouseButtonUp(0) && DidUserClickLeftMouse(mouseDownPoint)){
-						if(!Common.ShiftKeysDown())
-							DeselectGameobjectsIfSelected();
-					}
-				} else{
+				// Store point at mouse button down
+				if (Input.GetMouseButtonDown (0)) {
 					
-					// Hitting other objects
-					if(Input.GetMouseButtonUp(0) && DidUserClickLeftMouse(mouseDownPoint)){
+					mouseDownPoint = hit.point;
+					timeLeftBeforeDeclareDrag = timeLimitBeforeDeclareDrag;
+					mouseDragStart = Input.mousePosition;
+					startedDrag = true;
 
-						// Is the user hitting a unit?
-						if(hit.collider.transform.gameObject.GetComponent<Unit>()) {
-							
-							// Found a selectable object
-							if(!UnitAlreadyInCurrentlySelectedUnits(hit.collider.transform.gameObject)) {
-								
-								// If the shift key is not down, start selecting anew
-								if (!Common.ShiftKeysDown()) {
-									DeselectGameobjectsIfSelected();
-								}
-								
-								// Set the selected projection
-								GameObject selectedObj = hit.collider.transform.FindChild("Selected").gameObject;
-								selectedObj.SetActive(true);
-								
-								// Add the unit to the arraylist
-								currentlySelectedUnits.Add (hit.collider.transform.gameObject);
+				} else if (Input.GetMouseButton (0)) {
+					// if the user is not dragging, lets do the tests
+					if (!userIsDragging) {
+						timeLeftBeforeDeclareDrag -= Time.deltaTime;
+						if (timeLeftBeforeDeclareDrag <= 0f || UserDraggingByPosition (mouseDragStart, Input.mousePosition)) {
+							userIsDragging = true;
+						}
+					}
+					
+				} else if (Input.GetMouseButtonUp (0)) {
+					
+					if (userIsDragging) {
+						finishedDragOnThisFrame = true;
+					}
+					userIsDragging = false;
+				}
+				
+				
+				// Mouse click
+				if (!userIsDragging) {
+					
+					if (hit.collider.name == "Ground") {
+						// Hitting the terrain
+						if (Input.GetMouseButtonDown (1)) {
+							// Clicking in main view
+							CreateMoveTarget(hit.point);
 
-								// Change the unit selected value to true
-								hit.collider.transform.gameObject.GetComponent<Unit>().selected = true;
+						} else if (Input.GetMouseButtonUp (0) && DidUserClickLeftMouse (mouseDownPoint)) {
+							if (!Common.ShiftKeysDown ())
+								DeselectGameobjectsIfSelected ();
+						}
+					} else {
+						
+						// Hitting other objects
+						if (Input.GetMouseButtonUp (0) && DidUserClickLeftMouse (mouseDownPoint)) {
+
+							Debug.Log ("INSIDE");
+
+							// Is the user hitting a unit?
+							if (hit.collider.transform.gameObject.GetComponent<Unit> ()) {
 								
-							} else {
-								// Unit is already in the currently selected units arraylist, remove the unit when shift is held down
-								if(Common.ShiftKeysDown()){
-									RemoveUnitFromCurrentlySelectedUnits(hit.collider.transform.gameObject);
-								} else {
-									DeselectGameobjectsIfSelected();
+								// Found a selectable object
+								if (!UnitAlreadyInCurrentlySelectedUnits (hit.collider.transform.gameObject)) {
+									
+									// If the shift key is not down, start selecting anew
+									if (!Common.ShiftKeysDown ()) {
+										DeselectGameobjectsIfSelected ();
+									}
 									
 									// Set the selected projection
-									GameObject selectedObj = hit.collider.transform.FindChild("Selected").gameObject;
-									selectedObj.SetActive(true);
+									GameObject selectedObj = hit.collider.transform.FindChild ("Selected").gameObject;
+									selectedObj.SetActive (true);
 									
 									// Add the unit to the arraylist
 									currentlySelectedUnits.Add (hit.collider.transform.gameObject);
 
 									// Change the unit selected value to true
-									hit.collider.transform.gameObject.GetComponent<Unit>().selected = true;
+									hit.collider.transform.gameObject.GetComponent<Unit> ().selected = true;
+									
+								} else {
+									// Unit is already in the currently selected units arraylist, remove the unit when shift is held down
+									if (Common.ShiftKeysDown ()) {
+										RemoveUnitFromCurrentlySelectedUnits (hit.collider.transform.gameObject);
+									} else {
+										DeselectGameobjectsIfSelected ();
+										
+										// Set the selected projection
+										GameObject selectedObj = hit.collider.transform.FindChild ("Selected").gameObject;
+										selectedObj.SetActive (true);
+										
+										// Add the unit to the arraylist
+										currentlySelectedUnits.Add (hit.collider.transform.gameObject);
+
+										// Change the unit selected value to true
+										hit.collider.transform.gameObject.GetComponent<Unit> ().selected = true;
+									}
+									
 								}
 								
+							} else {
+								// If this object is not a unit
+								if (!Common.ShiftKeysDown ())
+									DeselectGameobjectsIfSelected ();
 							}
 							
 						}
-						else {
-							// If this object is not a unit
-							if(!Common.ShiftKeysDown())
-								DeselectGameobjectsIfSelected();
-						}
-						
 					}
 				}
+				
+				
+			} else if (Input.GetMouseButtonUp (0) && DidUserClickLeftMouse (mouseDownPoint)) {
+				if (!Common.ShiftKeysDown ())
+					DeselectGameobjectsIfSelected ();
 			}
-			
-			
-		}
-		else if(Input.GetMouseButtonUp(0) && DidUserClickLeftMouse(mouseDownPoint)){
-			if(!Common.ShiftKeysDown())
-				DeselectGameobjectsIfSelected();
+
+			// Debug.DrawRay(ray.origin, ray.direction * ResourceManager.Raylength, Color.yellow);
+
 		}
 
 
@@ -175,9 +196,6 @@ public class Mouse : MonoBehaviour {
 			DeselectGameobjectsIfSelected();
 			startedDrag = false;
 		}
-
-		Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.yellow);
-		
 		
 		// GUI variables
 		if (userIsDragging) {
@@ -253,6 +271,23 @@ public class Mouse : MonoBehaviour {
 	
 	#region helper functions
 
+//	public static bool UserClickedMouse() {
+//		if (Input.GetMouseButtonDown (0) || Input.GetMouseButtonDown (1)) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
+
+	private void CreateMoveTarget(Vector3 startPoint) {
+		
+		GameObject TargetObj = Instantiate (target, startPoint, Quaternion.identity) as GameObject;
+		TargetObj.name = "target";
+		
+		// Store the rightclick point
+		rightClickPoint = startPoint;
+	}
+
 	
 	// Is the user dragging relative to the mouse start point?
 	public bool UserDraggingByPosition(Vector2 dragStartPoint, Vector2 newPoint) {
@@ -311,6 +346,7 @@ public class Mouse : MonoBehaviour {
 				if(arrayListUnit == unit) {
 					currentlySelectedUnits.RemoveAt(i);
 					arrayListUnit.transform.FindChild("Selected").gameObject.SetActive(false);
+					arrayListUnit.GetComponent<Unit>().selected = false;
 				}
 			}
 		}

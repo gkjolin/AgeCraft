@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using RTS;
 
 /*
  * This Script should be attached to all controllable units in the game, wether they are walkable or not
@@ -16,6 +17,12 @@ public class Unit : MonoBehaviour {
 	public bool selected = false;
 
 	public bool isWalkable = true;
+
+	// For minimap
+	public int mapPixelSize = 4;
+
+	// GUI
+	public Texture unitTexture;
 
 	void Awake() {
 		// Physics.IgnoreLayerCollision (9, 9, true);
@@ -51,4 +58,26 @@ public class Unit : MonoBehaviour {
 			}
 		}
 	}
+	
+	
+	void OnGUI (){
+		if (!unitTexture) {
+			Debug.LogError("Assign a Texture in the inspector.");
+			return;
+		}
+
+		// Calculate the screen position of the unit
+		Vector2 xyPos = Common.CalculateMinimapPosFromWorldCoordinate (transform.position);
+
+		// Place a small gui box over the minimap
+		Rect minimapPosition = new Rect (
+            xyPos.x,
+            xyPos.y,
+			mapPixelSize,
+			mapPixelSize
+			);
+
+		GUI.DrawTexture(minimapPosition, unitTexture);
+	}
+
 }
