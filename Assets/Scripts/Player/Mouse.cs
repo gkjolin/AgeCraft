@@ -21,6 +21,10 @@ public class Mouse : MonoBehaviour {
 	private bool finishedDragOnThisFrame;
 	private bool startedDrag;
 
+	// private layermask to enable mouse moving to any point on terrain
+	private LayerMask allowTerrainMouseClick = (1 << 10);
+//	private LayerMask ignoreLayersForMouseMove = ~((1 << 8) | (1 << 9) | (1 << 11));
+
 	
 	// Dragging variables
 	public static bool userIsDragging;
@@ -41,7 +45,8 @@ public class Mouse : MonoBehaviour {
 	private float boxLeft;
 	private static Vector2 boxStart;
 	private static Vector2 boxFinish;
-		
+
+	// Initialize camera
 	void Start() {
 		playerCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
 	}
@@ -51,8 +56,9 @@ public class Mouse : MonoBehaviour {
 		
 		// Run selection methods
 		Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
-		
-		if(Physics.Raycast(ray, out hit, rayLength)){
+
+		// Allow the user to click anywhere on the terrain to move objects
+		if(Physics.Raycast(ray, out hit, rayLength, allowTerrainMouseClick)){
 			
 			// Temporary store the current mouse point
 			currentMousePoint = hit.point;
@@ -138,6 +144,9 @@ public class Mouse : MonoBehaviour {
 									
 									// Add the unit to the arraylist
 									currentlySelectedUnits.Add (hit.collider.transform.gameObject);
+
+									// Change the unit selected value to true
+									hit.collider.transform.gameObject.GetComponent<Unit>().selected = true;
 								}
 								
 							}
