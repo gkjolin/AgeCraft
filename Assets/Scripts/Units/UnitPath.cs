@@ -9,8 +9,6 @@ public class UnitPath : MonoBehaviour {
 	public Path path;
 	private Unit unit;
 	
-	public float speed;
-	
 	// The max distance from the AI to a waypoint for it to continue to the next waypoint
 	public float nextWaypointDistance = 5;
 	
@@ -34,7 +32,6 @@ public class UnitPath : MonoBehaviour {
 	}
 
 	// Pathfinding logic
-	
 	public void OnPathComplete(Path p) {
 		if (!p.error) {
 			path = p;
@@ -55,9 +52,13 @@ public class UnitPath : MonoBehaviour {
 		
 		// Calculate direction of unit
 		Vector3 dir = (path.vectorPath [currentWaypoint] - transform.position).normalized;
-		dir *= speed * Time.fixedDeltaTime;
-		
-		controller.SimpleMove (dir); // Unit moves here!
+		dir *= unit.moveSpeed * Time.fixedDeltaTime;
+
+		// Have unit face forwards
+		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z)), unit.rotationSpeed * Time.fixedDeltaTime);
+
+		// Have unit move forwards
+		controller.SimpleMove (dir);
 		
 		// Check if close enough to the current waypoint, if we are, proceed to next waypoint
 		if (Vector3.Distance (transform.position, path.vectorPath [currentWaypoint]) < nextWaypointDistance) {

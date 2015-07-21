@@ -5,7 +5,8 @@ using RTS;
 public class Mouse : MonoBehaviour {
 
 	// Private variables
-	private Camera playerCam;
+	private PlayerCamera playerCamera;
+	private Camera pCam;
 	private Camera miniCam;
 
 	// Ray cast mouse tracker
@@ -32,7 +33,8 @@ public class Mouse : MonoBehaviour {
 	private static float timeLeftBeforeDeclareDrag;
 	private static Vector2 mouseDragStart;
 
-	
+
+	private bool clickedInHUD = false;
 	private static Vector3 mouseDownPoint;
 	private static Vector3 currentMousePoint; // world space
 	
@@ -48,7 +50,8 @@ public class Mouse : MonoBehaviour {
 
 	// Initialize camera
 	void Start() {
-		playerCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
+		playerCamera = transform.root.FindChild ("Camera").GetComponent<PlayerCamera> ();
+		pCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
 		miniCam = transform.root.FindChild ("MinimapCamera").GetComponent<Camera> ();
 	}
 
@@ -56,26 +59,50 @@ public class Mouse : MonoBehaviour {
 	public void MouseTracker () {
 
 		// Check if right-clicking on minimap
-		if (Input.GetMouseButtonDown (1) && miniCam.pixelRect.Contains (Input.mousePosition)) {
+		if (miniCam.pixelRect.Contains (Input.mousePosition) && !userIsDragging) {
 			// Clicking inside minimap viewport
 
-			// Run selection methods
-			Ray ray = miniCam.ScreenPointToRay (Input.mousePosition);
-			
-			// Allow the user to click anywhere on the terrain to move objects
-			if (Physics.Raycast (ray, out hit, ResourceManager.Raylength, allowTerrainMouseClick)) {
+			// Right clicking
+			if(Input.GetMouseButtonDown (1)) {
+				// Run selection methods
+				Ray ray = miniCam.ScreenPointToRay (Input.mousePosition);
+				
+				// Allow the user to click anywhere on the terrain to move objects
+				if (Physics.Raycast (ray, out hit, ResourceManager.Raylength, allowTerrainMouseClick)) {
 
-				// Hitting the ground
-				if (hit.collider.name == "Ground") {
-					// Clicking in minimap
-					CreateMoveTarget(hit.point);
+					// Hitting the ground
+					if (hit.collider.name == "Ground") {
+						// Clicking in minimap
+						CreateMoveTarget(hit.point);
+					}
 				}
+			} else if(Input.GetMouseButtonDown(0)){
+				// Left clicking in minimap
+				clickedInHUD = true;
+				
+			} else if(Input.GetMouseButton(0) && clickedInHUD){
+				// Holding mouse in minimap
+
+				Ray ray = miniCam.ScreenPointToRay (Input.mousePosition);
+				
+				// Allow the user to click anywhere on the terrain to move objects
+				if (Physics.Raycast (ray, out hit, ResourceManager.Raylength, allowTerrainMouseClick)) {
+
+					// Hitting the ground
+					if (hit.collider.name == "Ground") {
+						playerCamera.MoveCameraToLocation(hit.point);
+					}
+				}
+
+			} else if(Input.GetMouseButtonUp(0)) {
+				// Left clicking release in minimap
+				clickedInHUD = false;
 			}
 			
-		} else {
+		} else if (!clickedInHUD){
 
 			// Run selection methods
-			Ray ray = playerCam.ScreenPointToRay (Input.mousePosition);
+			Ray ray = pCam.ScreenPointToRay (Input.mousePosition);
 
 			// Allow the user to click anywhere on the terrain to move objects
 			if (Physics.Raycast (ray, out hit, ResourceManager.Raylength)) {
@@ -188,6 +215,9 @@ public class Mouse : MonoBehaviour {
 
 			// Debug.DrawRay(ray.origin, ray.direction * ResourceManager.Raylength, Color.yellow);
 
+		} else if(Input.GetMouseButtonUp(0)) {
+			// Set clickedInHUD to false when left mouse button is up anywhere on the map
+			clickedInHUD = false;
 		}
 
 
@@ -199,8 +229,8 @@ public class Mouse : MonoBehaviour {
 		
 		// GUI variables
 		if (userIsDragging) {
-			boxWidth = playerCam.WorldToScreenPoint(mouseDownPoint).x - playerCam.WorldToScreenPoint(currentMousePoint).x;
-			boxHeight = playerCam.WorldToScreenPoint(mouseDownPoint).y - playerCam.WorldToScreenPoint(currentMousePoint).y;
+			boxWidth = pCam.WorldToScreenPoint(mouseDownPoint).x - pCam.WorldToScreenPoint(currentMousePoint).x;
+			boxHeight = pCam.WorldToScreenPoint(mouseDownPoint).y - pCam.WorldToScreenPoint(currentMousePoint).y;
 			boxLeft = Input.mousePosition.x;
 			boxTop = (Screen.height - Input.mousePosition.y) - boxHeight;
 			

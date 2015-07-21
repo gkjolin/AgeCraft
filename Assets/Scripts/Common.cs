@@ -4,6 +4,8 @@ using RTS;
 
 public class Common : MonoBehaviour {
 
+	private static Terrain worldTerrain = GameObject.Find ("Ground").GetComponent<Terrain> ();
+
 	// Float to bool
 	public static bool FloatToBool(float val) {
 		if (val < 0f)
@@ -28,8 +30,6 @@ public class Common : MonoBehaviour {
 	}
 
 	public static Vector2 CalculateMinimapPosFromWorldCoordinate(Vector3 pos){
-		
-		Terrain worldTerrain = GameObject.Find ("Ground").GetComponent<Terrain> ();
 
 		float xOffset = (pos.x / worldTerrain.terrainData.size.x) * (Screen.width * ResourceManager.MinimapSizeX);
 		float zOffset = (pos.z / worldTerrain.terrainData.size.z) * (Screen.height * ResourceManager.MinimapSizeZ);

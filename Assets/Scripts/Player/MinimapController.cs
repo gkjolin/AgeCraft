@@ -8,7 +8,6 @@ public class MinimapController : MonoBehaviour {
 	private Resolution ScreenResolution;
 
 	private Camera mainCamera;
-	private LayerMask terrainLayerMask = (1 << 10);
 
 	private static Material lineMaterial;
 	private static void CreateLineMaterial() {
@@ -29,7 +28,8 @@ public class MinimapController : MonoBehaviour {
 		mainCamera = transform.root.FindChild ("Camera").GetComponent<Camera> ();
 	}
 
-	void OnGUI() {
+	public void RenderViewportBox() {
+
 		Ray topLeftRay = mainCamera.ViewportPointToRay(new Vector3(0, 1, 0));
 		Ray topRightRay = mainCamera.ViewportPointToRay(new Vector3(1, 1, 0));
 		Ray bottomLeftRay = mainCamera.ViewportPointToRay(new Vector3(0, 0, 0));
@@ -38,8 +38,8 @@ public class MinimapController : MonoBehaviour {
 		RaycastHit topLeftHit, topRightHit, bottomLeftHit, bottomRightHit;
 		Vector2 topLeftMinimap, topRightMinimap, bottomLeftMinimap, bottomRightMinimap;
 
-		CreateLineMaterial();
 		// set the current material
+		CreateLineMaterial();
 		lineMaterial.SetPass( 0 );
 		GL.Begin( GL.LINES );
 		GL.Color( Color.white );

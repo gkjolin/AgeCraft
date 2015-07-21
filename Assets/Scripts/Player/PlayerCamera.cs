@@ -3,8 +3,8 @@ using System.Collections;
 using RTS;
 
 public class PlayerCamera : MonoBehaviour {
-
-	private Camera playerCam;
+	
+	private Camera pCam;
 
 	public Terrain worldTerrain;
 	public float worldTerrainPadding = 25f;
@@ -23,7 +23,9 @@ public class PlayerCamera : MonoBehaviour {
 	public static BoxLimit mouseScrollLimits = new BoxLimit();
 
 	void Start() {
-		playerCam = transform.GetComponent<Camera> ();
+
+		// Player camera
+		pCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
 
 		// Declare camera limits
 		cameraLimits.leftLimit = worldTerrain.transform.position.x + worldTerrainPadding;
@@ -103,6 +105,17 @@ public class PlayerCamera : MonoBehaviour {
 			}
 		}
 		
+	}
+
+	public void MoveCameraToLocation(Vector3 targetPoint) {
+
+		// Keep the height
+		targetPoint.y = pCam.transform.position.y;
+		targetPoint.z -= 10f;
+
+		// Move the camera
+		pCam.transform.position = targetPoint;
+
 	}
 
 	public Vector3 GetDesiredTranslation() {
@@ -241,10 +254,6 @@ public class PlayerCamera : MonoBehaviour {
 		Vector3 desiredWorldPosition = this.transform.TransformPoint (desiredTranslation);
 
 		bool overBoundaries = false;
-		
-		Debug.Log ("Original: " + desiredTranslation);
-		Debug.Log ("Desired: " + desiredWorldPosition);
-		Debug.Log ("Limit: " + cameraLimits.bottomLimit);
 
 		// Check boundaries
 		if (desiredWorldPosition.x < cameraLimits.leftLimit)
