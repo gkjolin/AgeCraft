@@ -13,11 +13,11 @@
          Pass
          {
              ZWrite Off
-              Fog { Color (1, 1, 1) }
-              AlphaTest Less 1
-              ColorMask RGB
-              Blend DstColor Zero
-              Offset -1, -1
+             Fog { Color (1, 1, 1) }
+             AlphaTest Less 1
+             ColorMask RGB
+             Blend DstColor Zero
+             Offset -1, -1
                           
              CGPROGRAM
              #pragma vertex vert
@@ -34,6 +34,7 @@
              };
              
               
+             float4 _Color;
              sampler2D _ShadowTex;
              sampler2D _FalloffTex;
              float4x4 _Projector;

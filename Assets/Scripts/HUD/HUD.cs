@@ -18,14 +18,13 @@ public class HUD : MonoBehaviour {
 
 		resourceImages = new Dictionary< ResourceType, Texture2D >();
 		for(int i = 0; i < resources.Length; i++) {
+			Debug.Log(resources[i].name);
 			switch(resources[i].name) {
 			case "Materials": // From image icon name
 				resourceImages.Add(ResourceType.Materials, resources[i]);
-				resourceValues.Add(ResourceType.Materials, 0);
 				break;
 			case "Energy": // From image icon name
 				resourceImages.Add(ResourceType.Energy, resources[i]);
-				resourceValues.Add(ResourceType.Energy, 0);
 				break;
 			default: break;
 			}
@@ -43,13 +42,13 @@ public class HUD : MonoBehaviour {
 	private void DrawResourceBars() {
 		GUI.skin = resourceSkin;
 		
-		GUI.BeginGroup (new Rect (Screen.width - 300, 100, 200, 100));
-		GUI.Box(new Rect (0, 0, 200, 100),"");
+		GUI.BeginGroup (new Rect (Screen.width - 150, 20, 150, 80));
+		GUI.Box(new Rect (0, 0, 130, 45),"");
 
-		int topPos = 4, iconLeft = 4, textLeft = 20;
+		int topPos = 5, iconLeft = 4, textLeft = 40;
 		DrawResourceIcon(ResourceType.Materials, iconLeft, textLeft, topPos);
-		iconLeft += 15;
-		textLeft += 15;
+		iconLeft += 32 + textLeft;
+		textLeft += 32 + textLeft;
 		DrawResourceIcon(ResourceType.Energy, iconLeft, textLeft, topPos);
 
 		GUI.EndGroup();
@@ -59,8 +58,8 @@ public class HUD : MonoBehaviour {
 	private void DrawResourceIcon(ResourceType type, int iconLeft, int textLeft, int topPos) {
 		Texture2D icon = resourceImages[type];
 		string text = resourceValues[type].ToString();
-		GUI.DrawTexture(new Rect(iconLeft, topPos, 15, 15), icon);
-		GUI.Label (new Rect(textLeft, topPos, 15, 15), text);
+		GUI.DrawTexture(new Rect(iconLeft, topPos, 32, 32), icon);
+		GUI.Label (new Rect(textLeft, topPos, 32, 32), text);
 	}
 
 	private void DrawHUD() {

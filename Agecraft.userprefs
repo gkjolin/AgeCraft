@@ -1,19 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\HUD\HUD.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Materials\Projections\SelectedUnit\SelectedUnit.shader">
     <Files>
-      <File FileName="Assets\Scripts\WorldObjects\WorldObject.cs" Line="21" Column="59" />
+      <File FileName="Assets\Scripts\HUD\HUD.cs" Line="38" Column="14" />
+      <File FileName="Assets\Scripts\WorldObjects\WorldObject.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Player\MinimapController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Player\PlayerCamera.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Units\UnitPath.cs" Line="36" Column="18" />
-      <File FileName="Assets\Scripts\Player\Mouse.cs" Line="307" Column="13" />
+      <File FileName="Assets\Scripts\Units\UnitPath.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player\Mouse.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Player\UserInput.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\Player.cs" Line="49" Column="31" />
+      <File FileName="Assets\Scripts\Player\Player.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Units\Unit.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Common.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ResourceManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\HUD\HUD.cs" Line="28" Column="22" />
-      <File FileName="Assets\Scripts\Building\Building.cs" Line="9" Column="2" />
+      <File FileName="Assets\Scripts\Building\Building.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\WorldObjects\PlayerObject.cs" Line="1" Column="1" />
+      <File FileName="Assets\Materials\Projections\SelectedUnit\SelectedUnit.shader" Line="38" Column="35" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Building : WorldObject {
+public class Building : PlayerObject {
 
 	protected override void Awake() {
 		base.Awake();

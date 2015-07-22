@@ -14,8 +14,8 @@ namespace RTS {
 		public static float MinCameraHeight { get { return 20; } }
 		public static float MaxCameraHeight { get { return 60; } }
 		
-		public static float MinimapOffsetX { get { return 0.05f; } }
-		public static float MinimapOffsetZ { get { return 0.05f; } }
+		public static float MinimapOffsetX { get { return 0.02f; } }
+		public static float MinimapOffsetZ { get { return 0.02f; } }
 		public static float MinimapSizeZ { get { return 0.30f; } }
 		public static float MinimapSizeX { get { 
 				float aspectRatio = (float) Screen.height / Screen.width;

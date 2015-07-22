@@ -1,3 +1,252 @@
 Base path: C:/Program Files/Unity/Editor/Data
-Pipe name: \\.\pipe\UnityShaderCompiler-64bit-1-6492
+Pipe name: \\.\pipe\UnityShaderCompiler-64bit-1-1756
 Cmd: getPlatforms
+Cmd: preprocess
+  insize=1853 outsize=687 ok=1
+Cmd: preprocess
+  insize=1857 outsize=691 ok=1
+Cmd: preprocess
+  insize=1900 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1517 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1517 outsize=1168 kw= ok=1
+Cmd: preprocess
+  insize=1903 outsize=684 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1517 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1517 outsize=1168 kw= ok=1
+Cmd: preprocess
+  insize=1901 outsize=685 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1515 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1515 outsize=1168 kw= ok=1
+Cmd: preprocess
+  insize=1903 outsize=685 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1517 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1517 outsize=1128 kw= ok=1
+Cmd: preprocess
+  insize=1903 outsize=685 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1517 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1517 outsize=1128 kw= ok=1
+Cmd: preprocess
+  insize=1903 outsize=685 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1517 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1517 outsize=1046 kw= ok=1
+Cmd: preprocess
+  insize=1903 outsize=684 ok=1
+Cmd: preprocess
+  insize=1903 outsize=684 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1517 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1517 outsize=1168 kw= ok=1
+Cmd: preprocess
+  insize=1911 outsize=685 ok=1
+Cmd: compileSnippet
+  error: 2 plat 4 at (57): invalid subscript 'grayscale'\nCompiling Vertex program
+  api=4 type=0 insize=1525 outsize=0 kw= ok=0
+Cmd: preprocess
+  insize=1903 outsize=685 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1517 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1517 outsize=1168 kw= ok=1
+Cmd: preprocess
+  insize=1903 outsize=684 ok=1
+Cmd: preprocess
+  insize=1767 outsize=685 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1381 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1381 outsize=738 kw= ok=1
+Cmd: preprocess
+  insize=1763 outsize=685 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1377 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1377 outsize=664 kw= ok=1
+Cmd: preprocess
+  insize=1907 outsize=685 ok=1
+Cmd: compileSnippet
+  error: 2 plat 4 at (56): 'tex2Dproj': no matching 2 parameter intrinsic function; Possible intrinsic functions are: tex2Dproj(sampler2D, float4|half4|min10float4|min16float4)\nCompiling Vertex program
+  api=4 type=0 insize=1521 outsize=0 kw= ok=0
+Cmd: preprocess
+  insize=1903 outsize=684 ok=1
+Cmd: preprocess
+  insize=1903 outsize=685 ok=1
+Cmd: preprocess
+  insize=1911 outsize=685 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1525 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1525 outsize=664 kw= ok=1
+Cmd: preprocess
+  insize=1894 outsize=685 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1508 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1508 outsize=1071 kw= ok=1
+Cmd: preprocess
+  insize=1894 outsize=685 ok=1
+Cmd: preprocess
+  insize=1895 outsize=686 ok=1
+Cmd: preprocess
+  insize=1894 outsize=685 ok=1
+Cmd: preprocess
+  insize=1891 outsize=685 ok=1
+Cmd: compileSnippet
+  error: 2 plat 4 at (49): 'mul': no matching 2 parameter intrinsic function; Possible intrinsic functions are: mul(float|half|double|min10float|min16float|int|uint|min12int|min16int|min16uint, float|half|double|min10float|min16float|int|uint|min12int|min16int|min16uint) mul(float|half|double|min10float|min16float|int|uint|min12int|min16int|min16uint, floatK|halfK|doubleK|min10floatK|min16floatK|intK|uintK|min12intK|min16intK|min16uintK) mul(float|half|double|min10float|min16float|int|uint|min12int|min16int|min16uint, floatLxK|halfLxK|doubleLxK|min10floatLxK|min16floatLxK|intLxK|uintLxK|min12intLxK|min16intLxK|min16uintLxK) mul(floatM|halfM|doubleM|min10floatM|min16floatM|intM|uintM|min12intM|min16intM|min16uintM, float|half|double|min10float|min16float|int|uint|min12int|min16int|min16uint) mul(floatM|halfM|doubleM|min10floatM|min16floatM|intM|uintM|min12intM|min16intM|min16uintM, floatM|halfM|doubleM|min10floatM|min16floatM|intM|uintM|min12intM|min16intM|min16uintM) mul(floatM|halfM|doubleM|min10floatM|min16floatM|intM|uintM|min12intM|min16intM|min16uintM, floatMxK|halfMxK|doubleMxK|min10floatMxK|min16floatMxK|intMxK|uintMxK|min12intMxK|min16intMxK|min16uintMxK) mul(floatNxM|halfNxM|doubleNxM|min10floatNxM|min16floatNxM|intNxM|uintNxM|min12intNxM|min16intNxM|min16uintNxM, float|half|double|min10float|min16float|int|uint|min12int|min16int|min16uint) mul(floatNxM|halfNxM|doubleNxM|min10floatNxM|min16floatNxM|intNxM|uintNxM|min12intNxM|min16intNxM|min16uintNxM, floatM|halfM|doubleM|min10floatM|min16floatM|intM|uintM|min12intM|min16intM|min16uintM) mul(floatNxM|halfNxM|doubleNxM|min10floatNxM|min16floatNxM|intNxM|uintNxM|min12intNxM|min16intNxM|min16uintNxM, floatMxK|halfMxK|doubleMxK|min10floatMxK|min16floatMxK|intMxK|uintMxK|min12intMxK|min16intMxK|min16uintMxK)\nCompiling Vertex program
+  api=4 type=0 insize=1505 outsize=0 kw= ok=0
+Cmd: preprocess
+  insize=1894 outsize=685 ok=1
+Cmd: preprocess
+  insize=1876 outsize=681 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1493 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1493 outsize=1071 kw= ok=1
+Cmd: preprocess
+  insize=1869 outsize=674 ok=1
+Cmd: preprocess
+  insize=1876 outsize=681 ok=1
+Cmd: preprocess
+  insize=1879 outsize=681 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1496 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1496 outsize=1071 kw= ok=1
+Cmd: preprocess
+  insize=1876 outsize=681 ok=1
+Cmd: preprocess
+  insize=1875 outsize=682 ok=1
+Cmd: compileSnippet
+  error: 2 plat 4 at (46): undeclared identifier 'UNITY_MATRIX_MP'\nCompiling Vertex program
+  api=4 type=0 insize=1492 outsize=0 kw= ok=0
+Cmd: preprocess
+  insize=1876 outsize=681 ok=1
+Cmd: preprocess
+  insize=1875 outsize=682 ok=1
+Cmd: compileSnippet
+  error: 2 plat 4 at (46): undeclared identifier 'UNITY_MATRIX_MP'\nCompiling Vertex program
+  api=4 type=0 insize=1492 outsize=0 kw= ok=0
+Cmd: preprocess
+  insize=1876 outsize=681 ok=1
+Cmd: preprocess
+  insize=1875 outsize=682 ok=1
+Cmd: compileSnippet
+  error: 2 plat 4 at (46): undeclared identifier 'UNITY_MATRIX_MP'\nCompiling Vertex program
+  api=4 type=0 insize=1492 outsize=0 kw= ok=0
+Cmd: preprocess
+  insize=1876 outsize=681 ok=1
+Cmd: preprocess
+  insize=1862 outsize=667 ok=1
+Cmd: preprocess
+  insize=1876 outsize=681 ok=1
+Cmd: preprocess
+  insize=1877 outsize=681 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1494 outsize=1729 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1494 outsize=1071 kw= ok=1
+Cmd: preprocess
+  insize=1853 outsize=687 ok=1
+Cmd: preprocess
+  insize=997 outsize=1279 ok=1
+Cmd: preprocess
+  insize=663 outsize=660 ok=1
+Cmd: preprocess
+  insize=1857 outsize=681 ok=1
+Cmd: compileSnippet
+  error: 2 plat 4 at (56): 'frag': function must return a value\nCompiling Vertex program
+  error: 2 plat 4 at (56): undeclared identifier '_Color'\nCompiling Vertex program
+  api=4 type=0 insize=1474 outsize=0 kw= ok=0
+Cmd: preprocess
+  insize=1885 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1502 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1502 outsize=1168 kw= ok=1
+Cmd: preprocess
+  insize=1885 outsize=681 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1502 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1502 outsize=1168 kw= ok=1
+Cmd: preprocess
+  insize=1885 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1502 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1502 outsize=1046 kw= ok=1
+Cmd: preprocess
+  insize=1885 outsize=681 ok=1
+Cmd: preprocess
+  insize=1885 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1502 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1502 outsize=1168 kw= ok=1
+Cmd: preprocess
+  insize=1885 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1502 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1502 outsize=1128 kw= ok=1
+Cmd: preprocess
+  insize=1876 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1493 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1493 outsize=1071 kw= ok=1
+Cmd: preprocess
+  insize=1877 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1494 outsize=1729 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1494 outsize=1071 kw= ok=1
+Cmd: preprocess
+  insize=1867 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1484 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1484 outsize=1079 kw= ok=1
+Cmd: preprocess
+  insize=1885 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1502 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1502 outsize=1168 kw= ok=1
+Cmd: preprocess
+  insize=1911 outsize=682 ok=1
+Cmd: compileSnippet
+  error: 2 plat 4 at (49): invalid subscript 'color'\nCompiling Vertex program
+  api=4 type=0 insize=1528 outsize=0 kw= ok=0
+Cmd: preprocess
+  insize=1883 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1500 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1500 outsize=1168 kw= ok=1
+Cmd: preprocess
+  insize=1890 outsize=682 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1507 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1507 outsize=1176 kw= ok=1
+Cmd: preprocess
+  insize=1888 outsize=681 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1505 outsize=1794 kw= ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1505 outsize=1176 kw= ok=1
+Cmd: preprocess
+  insize=1876 outsize=682 ok=1

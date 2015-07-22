@@ -154,10 +154,8 @@ public class Mouse : MonoBehaviour {
 						// Hitting other objects
 						if (Input.GetMouseButtonUp (0) && DidUserClickLeftMouse (mouseDownPoint)) {
 
-							Debug.Log ("INSIDE");
-
-							// Is the user hitting a unit?
-							if (hit.collider.transform.gameObject.GetComponent<Unit> ()) {
+							// Is the user hitting a player object?
+							if (hit.collider.transform.gameObject.GetComponent<PlayerObject> ()) {
 								
 								// Found a selectable object
 								if (!UnitAlreadyInCurrentlySelectedUnits (hit.collider.transform.gameObject)) {
@@ -175,7 +173,7 @@ public class Mouse : MonoBehaviour {
 									currentlySelectedUnits.Add (hit.collider.transform.gameObject);
 
 									// Change the unit selected value to true
-									hit.collider.transform.gameObject.GetComponent<Unit> ().selected = true;
+									hit.collider.transform.gameObject.GetComponent<PlayerObject> ().selected = true;
 									
 								} else {
 									// Unit is already in the currently selected units arraylist, remove the unit when shift is held down
@@ -192,7 +190,7 @@ public class Mouse : MonoBehaviour {
 										currentlySelectedUnits.Add (hit.collider.transform.gameObject);
 
 										// Change the unit selected value to true
-										hit.collider.transform.gameObject.GetComponent<Unit> ().selected = true;
+										hit.collider.transform.gameObject.GetComponent<PlayerObject> ().selected = true;
 									}
 									
 								}
@@ -266,7 +264,7 @@ public class Mouse : MonoBehaviour {
 			// loop through those units
 			for(int i = 0; i < unitsOnScreen.Count; i++) {
 				GameObject unitObj = unitsOnScreen[i] as GameObject;
-				Unit unitScript = unitObj.GetComponent<Unit>();
+				PlayerObject unitScript = unitObj.GetComponent<PlayerObject>();
 				GameObject selectedObj = unitObj.transform.FindChild("Selected").gameObject;
 				
 				if(!UnitAlreadyInDraggedUnits(unitObj)) {
@@ -350,7 +348,7 @@ public class Mouse : MonoBehaviour {
 			for (int i = 0; i < currentlySelectedUnits.Count; i++) {
 				GameObject arrayListUnit = currentlySelectedUnits[i] as GameObject;
 				arrayListUnit.transform.FindChild ("Selected").gameObject.SetActive(false);
-				arrayListUnit.GetComponent<Unit>().selected = false;
+				arrayListUnit.GetComponent<PlayerObject>().selected = false;
 			}
 			currentlySelectedUnits.Clear ();
 		}
@@ -376,7 +374,7 @@ public class Mouse : MonoBehaviour {
 				if(arrayListUnit == unit) {
 					currentlySelectedUnits.RemoveAt(i);
 					arrayListUnit.transform.FindChild("Selected").gameObject.SetActive(false);
-					arrayListUnit.GetComponent<Unit>().selected = false;
+					arrayListUnit.GetComponent<PlayerObject>().selected = false;
 				}
 			}
 		}
@@ -399,7 +397,7 @@ public class Mouse : MonoBehaviour {
 			GameObject unitObj = unitsOnScreen[i] as GameObject;
 			if (unit == unitObj) {
 				unitsOnScreen.RemoveAt(i);
-				unitObj.GetComponent<Unit>().onScreen = false;
+				unitObj.GetComponent<PlayerObject>().onScreen = false;
 				return;
 			}
 		}
@@ -438,7 +436,7 @@ public class Mouse : MonoBehaviour {
 				// if unit is not already in currentlySelectedUnits, add it!
 				if(!UnitAlreadyInCurrentlySelectedUnits(unitObj)){
 					currentlySelectedUnits.Add (unitObj);
-					unitObj.GetComponent<Unit>().selected = true;
+					unitObj.GetComponent<PlayerObject>().selected = true;
 				} else if (Common.ShiftKeysDown() && UnitAlreadyInCurrentlySelectedUnits(unitObj)) {
 					// Remove the already selected unit from the selection set
 					RemoveUnitFromCurrentlySelectedUnits(unitObj);
