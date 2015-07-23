@@ -69,6 +69,15 @@ public class Building : PlayerObject {
 	protected override void OnGUI() {
 		base.OnGUI();
 	}
+
+	public override void DoRightClickAction(GameObject hitObject) {
+		base.DoRightClickAction (hitObject);
+		if (hasSpawnPoint && selected) {
+			// Set rally point on click position
+			SetRallyPoint (Mouse.rightClickPoint);
+		}
+		
+	}
 	
 	public override void PerformAction(string actionToPerform) {
 		base.PerformAction (actionToPerform);

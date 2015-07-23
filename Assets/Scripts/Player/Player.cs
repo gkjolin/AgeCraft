@@ -26,7 +26,9 @@ public class Player : MonoBehaviour {
 		minimapControl = transform.root.GetComponent<MinimapController>();
 		hud = transform.root.GetComponent<HUD>();
 
+		// Initialize resources
 		AddStartResources();
+		hud.SetResourceValues(resources);
 	}
 	
 	// Update is called once per frame
@@ -65,9 +67,10 @@ public class Player : MonoBehaviour {
 		newUnit.transform.parent = units.transform;
 
 		// Have the unit move to the rally point
-		UnitPath unitPath = newUnit.GetComponent< UnitPath >();
-		if(unitPath && spawnPoint != rallyPoint)
-			unitPath.MoveToLocation(rallyPoint);
+		if (spawnPoint != rallyPoint) {
+			Unit unitScript = newUnit.GetComponent< Unit >();
+			unitScript.MoveToLocation (rallyPoint);
+		}
 	}
 
 }

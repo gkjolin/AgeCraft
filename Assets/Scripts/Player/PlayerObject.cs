@@ -17,11 +17,6 @@ public class PlayerObject : WorldObject {
 	public bool onScreen;
 	public bool selected = false;
 	
-	public bool isWalkable = true;
-	
-	public float moveSpeed;
-	public float rotationSpeed;
-	
 	// For minimap
 	public int mapPixelSize = 4;
 	
@@ -84,6 +79,21 @@ public class PlayerObject : WorldObject {
 		} else {
 			GUI.DrawTexture(minimapPosition, minimapUnitTexture);
 		}
+	}
+	
+	public override void ObjectGotRightClicked(Player byPlayer) {
+		base.ObjectGotRightClicked (byPlayer);
+		if (player.Equals (byPlayer)) {
+			// A player right-clicked his own unit
+			Debug.Log("A player right-clicked his own unit");
+		} else {
+			// Another player right-clicked this unit
+			Debug.Log("Another player right-clicked this unit");
+		}
+	}
+	
+	public virtual void DoRightClickAction(GameObject hitObject) {
+
 	}
 	
 	public override void PerformAction(string actionToPerform) {

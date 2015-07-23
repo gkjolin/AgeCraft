@@ -31,6 +31,10 @@ public class WorldObject : MonoBehaviour {
 //		currentlySelected = selected;
 //	}
 
+	public virtual void ObjectGotRightClicked(Player byPlayer) {
+		// Do nothing
+	}
+
 	public string[] GetActions() {
 		return actions;
 	}

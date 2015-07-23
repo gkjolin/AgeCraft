@@ -5,6 +5,7 @@ using RTS;
 public class Mouse : MonoBehaviour {
 
 	// Private variables
+	private Player player;
 	private PlayerCamera playerCamera;
 	private Camera pCam;
 	private Camera miniCam;
@@ -51,6 +52,7 @@ public class Mouse : MonoBehaviour {
 
 	// Initialize camera
 	void Start() {
+		player = transform.root.GetComponent<Player> ();
 		playerCamera = transform.root.FindChild ("Camera").GetComponent<PlayerCamera> ();
 		pCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
 		miniCam = transform.root.FindChild ("MinimapCamera").GetComponent<Camera> ();
@@ -75,7 +77,7 @@ public class Mouse : MonoBehaviour {
 					// Hitting the ground
 					if (hit.collider.name == "Ground") {
 						// Clicking in minimap
-						CreateMoveTarget(hit.point);
+						CreateMoveTarget(hit);
 					}
 				}
 			} else if(Input.GetMouseButtonDown(0)){
@@ -147,18 +149,18 @@ public class Mouse : MonoBehaviour {
 					
 					if (hit.collider.name == "Ground") {
 						// Hitting the terrain
-						if (Input.GetMouseButtonDown (1)) {
+						if (Input.GetMouseButtonUp (1) && DidUserClick(mouseDownPoint)) {
 							// Clicking in main view
-							CreateMoveTarget(hit.point);
+							CreateMoveTarget(hit);
 
-						} else if (Input.GetMouseButtonUp (0) && DidUserClickLeftMouse (mouseDownPoint)) {
+						} else if (Input.GetMouseButtonUp (0) && DidUserClick (mouseDownPoint)) {
 							if (!Common.ShiftKeysDown ())
 								DeselectGameobjectsIfSelected ();
 						}
 					} else {
 						
 						// Hitting other objects
-						if (Input.GetMouseButtonUp (0) && DidUserClickLeftMouse (mouseDownPoint)) {
+						if (Input.GetMouseButtonUp (0) && DidUserClick (mouseDownPoint)) {
 
 							// Is the user hitting a player object?
 							if (hit.collider.transform.gameObject.GetComponent<PlayerObject> ()) {
@@ -207,12 +209,21 @@ public class Mouse : MonoBehaviour {
 									DeselectGameobjectsIfSelected ();
 							}
 							
+						} else if(Input.GetMouseButtonUp(1) && DidUserClick(mouseDownPoint)) {
+
+							// Check if user hit a world object
+							WorldObject hitObject = hit.collider.gameObject.GetComponent<WorldObject>();
+							if(hitObject) {
+								hitObject.ObjectGotRightClicked(player);
+								RightClickAction(hit.collider.gameObject);
+							}
+
 						}
 					}
 				}
 				
 				
-			} else if (Input.GetMouseButtonUp (0) && DidUserClickLeftMouse (mouseDownPoint)) {
+			} else if (Input.GetMouseButtonUp (0) && DidUserClick (mouseDownPoint)) {
 				if (!Common.ShiftKeysDown ())
 					DeselectGameobjectsIfSelected ();
 			}
@@ -305,23 +316,30 @@ public class Mouse : MonoBehaviour {
 	
 	#region helper functions
 
-//	public static bool UserClickedMouse() {
-//		if (Input.GetMouseButtonDown (0) || Input.GetMouseButtonDown (1)) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
-
-	private void CreateMoveTarget(Vector3 startPoint) {
-		
-		GameObject TargetObj = Instantiate (target, startPoint, Quaternion.identity) as GameObject;
-		TargetObj.name = "target";
-		
-		// Store the rightclick point
-		rightClickPoint = startPoint;
+	private void RightClickAction(GameObject hitObject) {
+		if (currentlySelectedUnits.Count > 0) {
+			for (int i = 0; i < currentlySelectedUnits.Count; i++) {
+				GameObject arrayListUnit = currentlySelectedUnits[i] as GameObject;
+				PlayerObject pObj = arrayListUnit.GetComponent<PlayerObject>();
+				if(pObj) {
+					pObj.DoRightClickAction(hitObject);
+				}
+			}
+		}
 	}
 
+	private void CreateMoveTarget(RaycastHit hit) {
+		
+		// Store the rightclick point
+		rightClickPoint = hit.point;
+
+		GameObject TargetObj = Instantiate (target, rightClickPoint, Quaternion.identity) as GameObject;
+		TargetObj.name = "target";
+
+		RightClickAction(hit.collider.gameObject);
+		
+	}
+	
 	
 	// Is the user dragging relative to the mouse start point?
 	public bool UserDraggingByPosition(Vector2 dragStartPoint, Vector2 newPoint) {
@@ -335,7 +353,7 @@ public class Mouse : MonoBehaviour {
 	}
 	
 	// Check if a user clicked mouse (with a small tolerance)
-	public bool DidUserClickLeftMouse (Vector3 hitPoint) {
+	public bool DidUserClick (Vector3 hitPoint) {
 		
 		if (
 			(mouseDownPoint.x < hitPoint.x + ResourceManager.ClickTolerance && mouseDownPoint.x > hitPoint.x - ResourceManager.ClickTolerance) &&

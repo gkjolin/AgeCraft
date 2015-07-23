@@ -1,15 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Units\UnitPath.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Units\Worker.cs">
     <Files>
-      <File FileName="Assets\Scripts\WorldObjects\WorldObject.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ResourceManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\PlayerObject.cs" Line="34" Column="2" />
-      <File FileName="Assets\Scripts\WorldObjects\Resource.cs" Line="17" Column="16" />
-      <File FileName="Assets\Scripts\WorldObjects\MaterialDeposit.cs" Line="18" Column="39" />
-      <File FileName="Assets\Scripts\Units\Worker.cs" Line="31" Column="3" />
-      <File FileName="Assets\Scripts\Player\Mouse.cs" Line="316" Column="31" />
-      <File FileName="Assets\Scripts\Units\UnitPath.cs" Line="23" Column="2" />
+      <File FileName="Assets\Scripts\Player\Mouse.cs" Line="322" Column="30" />
+      <File FileName="Assets\Scripts\Player\Player.cs" Line="48" Column="11" />
+      <File FileName="Assets\Scripts\Player\UserInput.cs" Line="17" Column="2" />
+      <File FileName="Assets\Scripts\WorldObjects\WorldObject.cs" Line="12" Column="18" />
+      <File FileName="Assets\Scripts\Player\PlayerObject.cs" Line="96" Column="3" />
+      <File FileName="Assets\Scripts\Units\Unit.cs" Line="57" Column="11" />
+      <File FileName="Assets\Scripts\Units\Worker.cs" Line="82" Column="39" />
+      <File FileName="Assets\Scripts\Building\Base.cs" Line="28" Column="1" />
+      <File FileName="Assets\Scripts\Building\RallyPoint.cs" Line="17" Column="1" />
+      <File FileName="Assets\Scripts\Building\Building.cs" Line="70" Column="16" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
