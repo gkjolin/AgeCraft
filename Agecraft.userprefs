@@ -1,21 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\WorldObjects\WorldObject.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Units\UnitPath.cs">
     <Files>
-      <File FileName="Assets\Scripts\Building\Building.cs" Line="64" Column="4" />
-      <File FileName="Assets\Scripts\HUD\HUD.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\WorldObjects\WorldObject.cs" Line="24" Column="62" />
-      <File FileName="Assets\Scripts\Player\Player.cs" Line="70" Column="12" />
-      <File FileName="Assets\Scripts\Units\Unit.cs" Line="19" Column="37" />
-      <File FileName="Assets\Scripts\Common.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\WorldObjects\WorldObject.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ResourceManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\WorldObjects\PlayerObject.cs" Line="14" Column="24" />
-      <File FileName="Assets\Scripts\GameObjectList.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Building\Base.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Units\Worker.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\Mouse.cs" Line="15" Column="26" />
-      <File FileName="Assets\Scripts\Building\RallyPoint.cs" Line="17" Column="1" />
-      <File FileName="Assets\Scripts\Units\UnitPath.cs" Line="38" Column="4" />
+      <File FileName="Assets\Scripts\Player\PlayerObject.cs" Line="34" Column="2" />
+      <File FileName="Assets\Scripts\WorldObjects\Resource.cs" Line="17" Column="16" />
+      <File FileName="Assets\Scripts\WorldObjects\MaterialDeposit.cs" Line="18" Column="39" />
+      <File FileName="Assets\Scripts\Units\Worker.cs" Line="31" Column="3" />
+      <File FileName="Assets\Scripts\Player\Mouse.cs" Line="316" Column="31" />
+      <File FileName="Assets\Scripts\Units\UnitPath.cs" Line="23" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

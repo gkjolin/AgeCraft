@@ -5,13 +5,9 @@ public class WorldObject : MonoBehaviour {
 
 	// Object variables
 	public string objectName;
-	public Texture2D buildImage;
-	public int cost, hitPoints, maxHitPoints;
 
 	// Protected variables
-	protected Player player;
 	protected string[] actions = {};
-//	protected bool currentlySelected = false;
 
 	// Object bounds
 	protected Bounds selectionBounds;
@@ -21,7 +17,7 @@ public class WorldObject : MonoBehaviour {
 	}
 	
 	protected virtual void Start () {
-		player = transform.root.GetComponentInChildren< Player >();
+
 	}
 	
 	protected virtual void Update () {
@@ -45,7 +41,7 @@ public class WorldObject : MonoBehaviour {
 
 	public void CalculatedBounds () {
 		selectionBounds = new Bounds(transform.position, Vector3.zero);
-		foreach(Renderer r in GetComponentsInChildren< Renderer >()) {
+		foreach(Renderer r in transform.FindChild("Model").GetComponentsInChildren< Renderer >()) {
 			selectionBounds.Encapsulate(r.bounds);
 		}
 	}

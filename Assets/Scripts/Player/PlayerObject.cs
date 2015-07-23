@@ -6,6 +6,12 @@ public class PlayerObject : WorldObject {
 	// Attached player camera
 	private Camera pCam;
 	
+	// Protected variables
+	protected Player player;
+	
+	public Texture2D buildImage;
+	public int cost, hitPoints, maxHitPoints;
+	
 	// For UserInput.cs
 	public Vector2 screenPos;
 	public bool onScreen;
@@ -29,6 +35,7 @@ public class PlayerObject : WorldObject {
 	protected override void Start () {
 		base.Start();
 		pCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
+		player = transform.root.GetComponentInChildren< Player >();
 	}
 	
 	protected override void Update () {

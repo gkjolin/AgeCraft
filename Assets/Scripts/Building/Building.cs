@@ -27,6 +27,8 @@ public class Building : PlayerObject {
 		Debug.Log (selectionBounds.center);
 		Debug.Log (selectionBounds.extents);
 		Debug.Log (transform.forward);
+		Debug.Log (spawnPoint);
+		Debug.Log (rallyPoint);
 	}
 	
 	protected override void Start () {
@@ -43,8 +45,8 @@ public class Building : PlayerObject {
 			RallyPoint rallyPt = player.GetComponentInChildren< RallyPoint >();
 			if(selected) {
 				if(rallyPt && player.isHuman && spawnPoint != null && rallyPoint != null) {
-					rallyPt.transform.position = rallyPoint;
-					rallyPt.transform.forward = transform.forward;
+//					rallyPt.transform.position = rallyPoint;
+//					rallyPt.transform.forward = transform.forward;
 					rallyPt.Enable();
 				}
 			} else {
@@ -109,11 +111,5 @@ public class Building : PlayerObject {
 			}
 		}
 	}
-//
-//	void OnDrawGizmosSelected() {
-//		Vector3 fromPoint = new Vector3 (transform.position.x, 10f, transform.position.z);
-//		Gizmos.color = Color.red;
-//		Gizmos.DrawLine (fromPoint, rallyPoint);
-//	}
 
 }
