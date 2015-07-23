@@ -59,4 +59,15 @@ public class Player : MonoBehaviour {
 		resources[type] += amount;
 	}
 
+	public void AddUnit(string unitName, Vector3 spawnPoint, Vector3 rallyPoint, Quaternion rotation) {
+		Units units = GetComponentInChildren< Units >();
+		GameObject newUnit = (GameObject)Instantiate(ResourceManager.GetUnit(unitName), spawnPoint, rotation);
+		newUnit.transform.parent = units.transform;
+
+		// Have the unit move to the rally point
+		UnitPath unitPath = newUnit.GetComponent< UnitPath >();
+		if(unitPath && spawnPoint != rallyPoint)
+			unitPath.MoveToLocation(rallyPoint);
+	}
+
 }

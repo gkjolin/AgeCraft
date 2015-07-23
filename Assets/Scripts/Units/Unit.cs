@@ -25,4 +25,8 @@ public class Unit : PlayerObject {
 		base.OnGUI();
 	}
 	
+	public override void PerformAction(string actionToPerform) {
+		base.PerformAction (actionToPerform);
+	}
+	
 }

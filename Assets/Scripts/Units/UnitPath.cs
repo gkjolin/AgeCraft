@@ -14,13 +14,12 @@ public class UnitPath : MonoBehaviour {
 	
 	// Current waypoint (always starts at index 0)
 	private int currentWaypoint = 0;
-
-	public void Start() {
+	
+	public void Awake() {
 		seeker = GetComponent<Seeker> ();
 		controller = GetComponent<CharacterController> ();
 		unit = GetComponent<Unit> ();
 	}
-
 
 	public void LateUpdate() {
 		if (unit.selected && unit.isWalkable) {
@@ -28,6 +27,14 @@ public class UnitPath : MonoBehaviour {
 				// Set path
 				seeker.StartPath (transform.position, Mouse.rightClickPoint, OnPathComplete);
 			}
+		}
+	}
+
+	public void MoveToLocation(Vector3 newPosition) {
+		Debug.Log (unit);
+		if (unit.isWalkable) {
+			// Set path
+			seeker.StartPath (transform.position, newPosition, OnPathComplete);
 		}
 	}
 

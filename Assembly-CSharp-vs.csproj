@@ -47,10 +47,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AStarPath.cs" />
+     <Compile Include="Assets\Scripts\Building\Base.cs" />
      <Compile Include="Assets\Scripts\Building\Building.cs" />
+     <Compile Include="Assets\Scripts\Building\Buildings.cs" />
+     <Compile Include="Assets\Scripts\Building\RallyPoint.cs" />
      <Compile Include="Assets\Scripts\Common.cs" />
      <Compile Include="Assets\Scripts\DestroyRootGameObject.cs" />
      <Compile Include="Assets\Scripts\Enums.cs" />
+     <Compile Include="Assets\Scripts\GameObjectList.cs" />
      <Compile Include="Assets\Scripts\HUD\HUD.cs" />
      <Compile Include="Assets\Scripts\Player\MinimapController.cs" />
      <Compile Include="Assets\Scripts\Player\Mouse.cs" />
@@ -61,6 +65,8 @@
      <Compile Include="Assets\Scripts\SceneManager.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />
      <Compile Include="Assets\Scripts\Units\UnitPath.cs" />
+     <Compile Include="Assets\Scripts\Units\Units.cs" />
+     <Compile Include="Assets\Scripts\Units\Worker.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\PlayerObject.cs" />
      <Compile Include="Assets\Scripts\WorldObjects\WorldObject.cs" />
      <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />

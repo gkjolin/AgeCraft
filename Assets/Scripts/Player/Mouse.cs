@@ -8,6 +8,7 @@ public class Mouse : MonoBehaviour {
 	private PlayerCamera playerCamera;
 	private Camera pCam;
 	private Camera miniCam;
+	private HUD hud;
 
 	// Ray cast mouse tracker
 	RaycastHit hit;
@@ -53,6 +54,7 @@ public class Mouse : MonoBehaviour {
 		playerCamera = transform.root.FindChild ("Camera").GetComponent<PlayerCamera> ();
 		pCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
 		miniCam = transform.root.FindChild ("MinimapCamera").GetComponent<Camera> ();
+		hud = transform.root.GetComponent<HUD> ();
 	}
 
 	#region mouse
@@ -99,6 +101,10 @@ public class Mouse : MonoBehaviour {
 				clickedInHUD = false;
 			}
 			
+		} else if(Input.mousePosition.y <= ResourceManager.HudHeight && !userIsDragging) {
+			// Mouse is inside hud - do HUD-related actions
+			Debug.Log ("Mouse is inside HUD");
+
 		} else if (!clickedInHUD){
 
 			// Run selection methods

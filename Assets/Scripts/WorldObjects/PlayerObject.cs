@@ -22,16 +22,16 @@ public class PlayerObject : WorldObject {
 	// GUI
 	public Texture minimapUnitTexture;
 	
-	protected virtual new void Awake() {
+	protected override void Awake() {
 		base.Awake();
+	}
+	
+	protected override void Start () {
+		base.Start();
 		pCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
 	}
 	
-	protected virtual new void Start () {
-		base.Start();
-	}
-	
-	protected virtual new void Update () {
+	protected override void Update () {
 		base.Update();
 		
 		// if unit not selected, get screen space
@@ -58,14 +58,9 @@ public class PlayerObject : WorldObject {
 		}
 	}
 	
-	protected virtual new void OnGUI() {
+	protected override void OnGUI() {
 		base.OnGUI();
-		
-		if (!minimapUnitTexture) {
-			Debug.LogError("Assign a Texture in the inspector.");
-			return;
-		}
-		
+
 		// Calculate the screen position of the unit
 		Vector2 xyPos = Common.CalculateMinimapPosFromWorldCoordinate (transform.position);
 		
@@ -76,9 +71,16 @@ public class PlayerObject : WorldObject {
 			mapPixelSize,
 			mapPixelSize
 			);
-
-		Common.GUIDrawRect (minimapPosition, Color.green);
-//		GUI.DrawTexture(minimapPosition, minimapUnitTexture);
+		
+		if (!minimapUnitTexture) {
+			Common.GUIDrawRect (minimapPosition, Color.green);
+		} else {
+			GUI.DrawTexture(minimapPosition, minimapUnitTexture);
+		}
+	}
+	
+	public override void PerformAction(string actionToPerform) {
+		base.PerformAction (actionToPerform);
 	}
 	
 
