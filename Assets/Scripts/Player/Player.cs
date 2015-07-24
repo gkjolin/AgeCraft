@@ -7,6 +7,7 @@ using RTS;
 public class Player : NetworkBehaviour {
 
 	// Player initialization
+//	private Player player;
 	public Camera playCam;
 	public Camera miniCam;
 	public MinimapController minimapControl;
@@ -25,9 +26,11 @@ public class Player : NetworkBehaviour {
 	public bool isHuman;
 
 	void Awake() {
-		playerCamera = transform.FindChild("Main Camera").GetComponent<PlayerCamera>();
-		playCam = transform.FindChild("Main Camera").GetComponent<Camera>();
-		miniCam = transform.FindChild("Minimap Camera").GetComponent<Camera>();
+//		player = transform.root.GetComponent<Player>();
+
+		playerCamera = transform.FindChild ("Main Camera").GetComponent<PlayerCamera> ();
+		playCam = transform.FindChild ("Main Camera").GetComponent<Camera> ();
+		miniCam = transform.FindChild ("Minimap Camera").GetComponent<Camera> ();
 
 		// Initialize resources
 		resources = InitResourceList();
