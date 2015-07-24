@@ -13,6 +13,8 @@ public class PlayerObject : WorldObject {
 	public Vector2 screenPos;
 	public bool onScreen;
 	public bool selected = false;
+
+	public bool isVisible = false;
 	
 	// For minimap
 	public int mapPixelSize = 4;
@@ -59,21 +61,30 @@ public class PlayerObject : WorldObject {
 	protected override void OnGUI() {
 		base.OnGUI();
 
-		// Calculate the screen position of the unit
-		Vector2 xyPos = Common.CalculateMinimapPosFromWorldCoordinate (transform.position);
+		if (player.isLocalPlayer || isVisible) {
+			// Calculate the screen position of the unit
+			Vector2 xyPos = Common.CalculateMinimapPosFromWorldCoordinate (transform.position);
 		
-		// Place a small gui box over the minimap
-		Rect minimapPosition = new Rect (
+			// Place a small gui box over the minimap
+			Rect minimapPosition = new Rect (
 			xyPos.x,
 			xyPos.y,
 			mapPixelSize,
 			mapPixelSize
 			);
 		
-		if (!minimapUnitTexture) {
-			Common.GUIDrawRect (minimapPosition, Color.green);
-		} else {
-			GUI.DrawTexture(minimapPosition, minimapUnitTexture);
+			if (!minimapUnitTexture) {
+				Color useColor = player.color;
+				if (player.isLocalPlayer) {
+					useColor = Color.green;
+				} else {
+					useColor = Color.red;
+				}
+
+				Common.GUIDrawRect (minimapPosition, useColor);
+			} else {
+				GUI.DrawTexture (minimapPosition, minimapUnitTexture);
+			}
 		}
 	}
 	

@@ -1,18 +1,19 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Player\MinimapController.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Common.cs">
     <Files>
-      <File FileName="Assets\Scripts\Player\PlayerCamera.cs" Line="22" Column="35" />
+      <File FileName="Assets\Scripts\HUD\HUD.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player\PlayerCamera.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Player\Mouse.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Units\Worker.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\HUD\HUD.cs" Line="97" Column="31" />
-      <File FileName="Assets\Scripts\Player\MinimapController.cs" Line="30" Column="2" />
-      <File FileName="Assets\Scripts\Player\Player.cs" Line="42" Column="4" />
-      <File FileName="Assets\Scripts\Player\PlayerObject.cs" Line="86" Column="40" />
+      <File FileName="Assets\Scripts\Units\Worker.cs" Line="31" Column="3" />
+      <File FileName="Assets\Scripts\Player\MinimapController.cs" Line="28" Column="36" />
+      <File FileName="Assets\Scripts\Player\Player.cs" Line="26" Column="2" />
+      <File FileName="Assets\Scripts\Player\PlayerObject.cs" Line="71" Column="12" />
       <File FileName="Assets\Scripts\Building\Building.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Units\Unit.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\WorldObjects\WorldObject.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Player\UserInput.cs" Line="23" Column="3" />
+      <File FileName="Assets\Scripts\Units\Unit.cs" Line="44" Column="16" />
+      <File FileName="Assets\Scripts\WorldObjects\WorldObject.cs" Line="35" Column="16" />
+      <File FileName="Assets\Scripts\Player\UserInput.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Common.cs" Line="20" Column="44" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

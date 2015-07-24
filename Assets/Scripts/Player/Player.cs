@@ -20,6 +20,7 @@ public class Player : NetworkBehaviour {
 	public int startEnergy;
 	private Dictionary< ResourceType, int > resources;
 
+	public Color color;
 	public string username;
 	public bool isHuman;
 
