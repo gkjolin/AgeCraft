@@ -8,12 +8,11 @@ using RTS;
  * */
 
 public class Unit : PlayerObject {
-
 	
 	private Seeker seeker;
 	public Path path;
 	protected Unit unit;
-	protected Rigidbody rigidbody;
+	protected Rigidbody rb;
 
 	// Movement-related stuff
 	public bool isWalkable = true;
@@ -26,11 +25,11 @@ public class Unit : PlayerObject {
 	// Current waypoint (always starts at index 0)
 	private int currentWaypoint = 0;
 
-	protected override void Awake() {
+	protected override void Awake(){
 		base.Awake();
-		seeker = transform.GetComponent<Seeker> ();
+		seeker = GetComponent<Seeker> ();
 		unit = GetComponent<Unit> ();
-		rigidbody = GetComponent<Rigidbody>();
+		rb = GetComponent<Rigidbody>();
 	}
 	
 	protected override void Start () {
@@ -53,7 +52,7 @@ public class Unit : PlayerObject {
 		base.DoRightClickAction (hitObject);
 
 		if (hitObject.name == "Ground") {
-			MoveToLocation(Mouse.rightClickPoint);
+			MoveToLocation(player.mouse.rightClickPoint);
 		} else {
 			Player objectOwner = hitObject.transform.root.gameObject.GetComponent<Player> ();
 			if (player.Equals (objectOwner)) {
@@ -107,17 +106,20 @@ public class Unit : PlayerObject {
 			return;
 		
 		// Calculate direction of unit
-		Vector3 dir = (path.vectorPath [currentWaypoint] - transform.position).normalized;
-		float step = unit.moveSpeed * Time.fixedDeltaTime;
+		Vector3 dir = (path.vectorPath [currentWaypoint] - transform.position).normalized * unit.moveSpeed;
+//		float step = unit.moveSpeed * Time.fixedDeltaTime;
 		
 		// Have unit face forwards
-		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z)), unit.rotationSpeed * Time.fixedDeltaTime);
+//		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z)), unit.rotationSpeed * Time.fixedDeltaTime);
+		rb.MoveRotation (Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z)), unit.rotationSpeed * Time.fixedDeltaTime));
 		
 		// Have unit move forwards
 //		Debug.Log (dir);
 //		controller.SimpleMove (dir);
-		transform.position = Vector3.MoveTowards(transform.position, path.vectorPath [currentWaypoint], step);
+//		transform.position = Vector3.MoveTowards(transform.position, path.vectorPath [currentWaypoint], step);
 //		transform.Translate (dir * Time.fixedDeltaTime);
+		rb.MovePosition (transform.position + dir * Time.fixedDeltaTime);
+
 		
 		// Check if close enough to the current waypoint, if we are, proceed to next waypoint
 		if (Vector3.Distance (transform.position, path.vectorPath [currentWaypoint]) < nextWaypointDistance) {

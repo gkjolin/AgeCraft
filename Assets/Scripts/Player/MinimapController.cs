@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using RTS;
 
-public class MinimapController : MonoBehaviour {
+public class MinimapController : NetworkBehaviour {
 	
 	private GameObject MinimapCamera;
 	private Resolution ScreenResolution;
@@ -25,7 +26,7 @@ public class MinimapController : MonoBehaviour {
 	}
 
 	void Start() {
-		mainCamera = transform.root.FindChild ("Camera").GetComponent<Camera> ();
+		mainCamera = Camera.main.GetComponent<Camera>();
 	}
 
 	public void RenderViewportBox() {
@@ -83,11 +84,12 @@ public class MinimapController : MonoBehaviour {
 		} else {
 			ScreenResolution = currentResolution;
 		}
-		
+
 		Screen.SetResolution (ScreenResolution.width, ScreenResolution.height, true);
 		
 		// UI Camera setup
-		MinimapCamera = this.transform.FindChild("MinimapCamera").gameObject;
+		MinimapCamera = GameObject.Find("Minimap Camera").gameObject;
+		MinimapCamera.SetActive (true);
 		Camera miniCam = MinimapCamera.GetComponent<Camera>();
 		
 		// Adjust the camera to center the map (world coordinates)
@@ -104,6 +106,13 @@ public class MinimapController : MonoBehaviour {
 			ResourceManager.MinimapSizeZ
 			);
 	}
+
+//	public void HideMinimap() {
+//		
+//		MinimapCamera = this.transform.FindChild("MinimapCamera").gameObject;
+//		MinimapCamera.SetActive (false);
+//
+//	}
 
 //
 //	public GameObject MinimapCamera;

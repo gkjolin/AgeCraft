@@ -2,10 +2,37 @@ using UnityEngine;
 using System.Collections;
 using Pathfinding;
 
+/** Moves a grid graph to follow a target.
+ *
+ * Attach this to some object in the scene and assign the target to e.g the player.
+ * Then the graph will follow that object around as it moves.
+ *
+ * This is useful if pathfinding is only necessary in a small region around an object (for example the player).
+ * It makes it possible to have vast open worlds (maybe procedurally generated) and still be able to use pathfinding on them.
+ *
+ * When the graph is moved you may notice an fps drop.
+ * If this grows too large you can try a few things:
+ * - Reduce the #updateDistance. This will make the updates smaller but more frequent.
+ *   This only works to some degree however since an update has an inherent overhead.
+ * - Turn off erosion on the grid graph. This will reduce the number of nodes that need updating.
+ * - Reduce the grid size.
+ * - Turn on multithreading (A* Inspector -> Settings)
+ * - Disable Height Testing or Collision Testing in the grid graph. This can give a minor performance boost.
+ *
+ * \see Take a look at the example scene called "Procedural" for an example of how to use this script
+ *
+ * \version Since 3.6.8 this class can handle graph rotation other options such as isometric angle and aspect ratio.
+ */
 public class ProceduralGridMover : MonoBehaviour {
-	
-	public float updateDistance = 5;
 
+	/** Graph will be updated if the target is more than this number of nodes from the graph center.
+	 * Note that this is in nodes, not world units.
+	 * 
+	 * \version The unit was changed to nodes instead of world units in 3.6.8.
+	 */
+	public float updateDistance = 10;
+
+	/** Graph will be moved to follow this target */
 	public Transform target;
 
 	/** Flood fill the graph after updating.
@@ -24,7 +51,11 @@ public class ProceduralGridMover : MonoBehaviour {
 	/** Grid graph to update */
 	GridGraph graph;
 
+	/** Temporary buffer */
 	GridNode[] tmp;
+
+	/** True while the graph is being updated by this script */
+	public bool updatingGraph {get; private set;}
 
 	public void Start () {
 		if ( AstarPath.active == null ) throw new System.Exception ("There is no AstarPath object in the scene");
@@ -35,19 +66,45 @@ public class ProceduralGridMover : MonoBehaviour {
 		UpdateGraph ();
 	}
 
-	// Update is called once per frame
+	/** Update is called once per frame */
 	void Update () {
 
-		// Check the distance along the XZ plane
-		// we only move the graph in the X and Z directions so
-		// checking for if the Y coordinate has changed is
-		// not something we want to do
-		if ( AstarMath.SqrMagnitudeXZ (target.position, graph.center) > updateDistance*updateDistance ) {
+		// Calculate where the graph center and the target position is in graph space
+		var graphCenterInGraphSpace = PointToGraphSpace(graph.center);
+		var targetPositionInGraphSpace = PointToGraphSpace (target.position);
+		// Check the distance in graph space
+		// We only care about the X and Z axes since the Y axis is the "height" coordinate of the nodes (in graph space)
+		// We only care about the plane that the nodes are placed in
+		if ( AstarMath.SqrMagnitudeXZ(graphCenterInGraphSpace, targetPositionInGraphSpace) > updateDistance*updateDistance ) {
 			UpdateGraph ();
 		}
 	}
 
+	/** Transforms a point from world space to graph space.
+	 * In graph space, (0,0,0) is bottom left corner of the graph
+	 * and one unit along the X and Z axes equals distance between two nodes
+	 * the Y axis still uses world units
+	 */
+	Vector3 PointToGraphSpace (Vector3 p) {
+		// Multiply with the inverse matrix of the graph
+		// to get the point in graph space
+		return graph.inverseMatrix.MultiplyPoint(p);
+	}
+
+	/** Updates the graph asynchronously.
+	 * This will move the graph so that the target's position is the center of the graph.
+	 * If the graph is already being updated, the call will be ignored.
+	 */
 	public void UpdateGraph () {
+
+		if (updatingGraph) {
+			// We are already updating the graph
+			// so ignore this call
+			return;
+		}
+
+		updatingGraph = true;
+
 		// Start a work item for updating the graph
 		// This will pause the pathfinding threads
 		// so that it is safe to update the graph
@@ -55,32 +112,42 @@ public class ProceduralGridMover : MonoBehaviour {
 		// (hence the IEnumerator coroutine)
 		// to avoid too large FPS drops
 		IEnumerator ie = UpdateGraphCoroutine ();
-		AstarPath.active.AddWorkItem (new AstarPath.AstarWorkItem (delegate (bool force) {
+		AstarPath.active.AddWorkItem (new AstarPath.AstarWorkItem (
+		force => {
+			// If force is true we need to calculate all steps at once
 			if ( force ) while ( ie.MoveNext () ) {}
-			return !ie.MoveNext ();
+
+			// Calculate one step. True will be returned when there are no more steps
+			bool done = !ie.MoveNext ();
+
+			if (done) {
+				updatingGraph = false;
+			}
+			return done;
 		}));
 	}
 
+	/** Async method for moving the graph */
 	IEnumerator UpdateGraphCoroutine () {
 
 		// Find the direction
-		// that we want to move the graph in
-		Vector3 dir = target.position - graph.center;
+		// that we want to move the graph in.
+		// Calcuculate this in graph space (where a distance of one is the size of one node)
+		Vector3 dir = PointToGraphSpace(target.position) - PointToGraphSpace(graph.center);
 
 		// Snap to a whole number of nodes
-		dir.x = Mathf.Round(dir.x/graph.nodeSize)*graph.nodeSize;
-		dir.z = Mathf.Round(dir.z/graph.nodeSize)*graph.nodeSize;
+		dir.x = Mathf.Round(dir.x);
+		dir.z = Mathf.Round(dir.z);
 		dir.y = 0;
 
 		// Nothing do to
 		if ( dir == Vector3.zero ) yield break;
 
-		// Number of nodes to offset in each
-		// direction
-		Int2 offset = new Int2 ( -Mathf.RoundToInt(dir.x/graph.nodeSize), -Mathf.RoundToInt(dir.z/graph.nodeSize) );
+		// Number of nodes to offset in each direction
+		Int2 offset = new Int2(-Mathf.RoundToInt(dir.x), -Mathf.RoundToInt(dir.z));
 
-		// Move the center
-		graph.center += dir;
+		// Move the center (this is in world units, so we need to convert it back from graph space)
+		graph.center += graph.matrix.MultiplyVector (dir);
 		graph.GenerateMatrix ();
 
 		// Create a temporary buffer

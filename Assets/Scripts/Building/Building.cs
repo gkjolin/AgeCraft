@@ -23,12 +23,7 @@ public class Building : PlayerObject {
 		float spawnZ = selectionBounds.center.z - transform.forward.z * selectionBounds.extents.z - transform.forward.z * 1;
 		spawnPoint = new Vector3(spawnX, 0.0f, spawnZ);
 		rallyPoint = new Vector3(spawnX - transform.forward.x * 3, 0.0f, spawnZ - transform.forward.z * 3);
-		
-		Debug.Log (selectionBounds.center);
-		Debug.Log (selectionBounds.extents);
-		Debug.Log (transform.forward);
-		Debug.Log (spawnPoint);
-		Debug.Log (rallyPoint);
+
 	}
 	
 	protected override void Start () {
@@ -61,7 +56,7 @@ public class Building : PlayerObject {
 		if (hasSpawnPoint && selected) {
 			if(Input.GetMouseButtonDown(1)){
 				// Set rally point on click position
-				SetRallyPoint (Mouse.rightClickPoint);
+				SetRallyPoint (player.mouse.rightClickPoint);
 			}
 		}
 	}
@@ -74,7 +69,7 @@ public class Building : PlayerObject {
 		base.DoRightClickAction (hitObject);
 		if (hasSpawnPoint && selected) {
 			// Set rally point on click position
-			SetRallyPoint (Mouse.rightClickPoint);
+			SetRallyPoint (player.mouse.rightClickPoint);
 		}
 		
 	}

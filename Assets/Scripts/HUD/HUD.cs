@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using RTS;
 
-public class HUD : MonoBehaviour {
+public class HUD : NetworkBehaviour {
 
 	public GUISkin hudSkin, resourceSkin;
 	public Texture2D[] resources;
@@ -26,7 +27,7 @@ public class HUD : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		player = transform.root.GetComponent<Player> ();
+		player = GetComponent<Player> ();
 
 		resourceImages = new Dictionary< ResourceType, Texture2D >();
 		for(int i = 0; i < resources.Length; i++) {
@@ -44,7 +45,7 @@ public class HUD : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		if (player && player.isHuman) {
+		if (player && player.isHuman && isLocalPlayer) {
 			DrawResourceBars();
 			DrawHUD();
 		}
@@ -78,8 +79,8 @@ public class HUD : MonoBehaviour {
 
 		GUI.BeginGroup (new Rect (Screen.width / 4f, Screen.height - ResourceManager.HudHeight, Screen.width, ResourceManager.HudHeight));
 		GUI.Box(new Rect (0, 0, Screen.width, ResourceManager.HudHeight),"");
-		if (Mouse.currentlySelectedUnits.Count > 0) {
-			GameObject curSel = Mouse.currentlySelectedUnits[0] as GameObject;
+		if (player.mouse.currentlySelectedUnits.Count > 0) {
+			GameObject curSel = player.mouse.currentlySelectedUnits[0] as GameObject;
 			Building selectedBuilding = curSel.GetComponent< Building >();
 			if(selectedBuilding) {
 				DrawBuildQueue(selectedBuilding.getBuildQueueValues(), selectedBuilding.getBuildPercentage());
@@ -118,8 +119,8 @@ public class HUD : MonoBehaviour {
 			if(action) {
 				//create the button and handle the click of that button
 				if(GUI.Button(pos, action)) {
-					if(Mouse.currentlySelectedUnits.Count > 0) {
-						GameObject curSel = Mouse.currentlySelectedUnits[0] as GameObject;
+					if(player.mouse.currentlySelectedUnits.Count > 0) {
+						GameObject curSel = player.mouse.currentlySelectedUnits[0] as GameObject;
 						curSel.GetComponent<PlayerObject>().PerformAction(actions[i]);
 					}
 				}

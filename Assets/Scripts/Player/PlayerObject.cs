@@ -2,12 +2,9 @@
 using System.Collections;
 
 public class PlayerObject : WorldObject {
-	
-	// Attached player camera
-	private Camera pCam;
-	
+		
 	// Protected variables
-	protected Player player;
+	public Player player;
 	
 	public Texture2D buildImage;
 	public int cost, hitPoints, maxHitPoints;
@@ -29,8 +26,7 @@ public class PlayerObject : WorldObject {
 	
 	protected override void Start () {
 		base.Start();
-		pCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
-		player = transform.root.GetComponentInChildren< Player >();
+		player = transform.root.GetComponent< Player >();
 	}
 	
 	protected override void Update () {
@@ -39,13 +35,13 @@ public class PlayerObject : WorldObject {
 		// if unit not selected, get screen space
 		if(!selected) {
 			// track the screen position
-			screenPos = pCam.WorldToScreenPoint(this.transform.position);
+			screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
 			
 			// if withing the screen space
-			if(Mouse.UnitsWithinScreenSpace(screenPos)) {
+			if(player.mouse.UnitsWithinScreenSpace(screenPos)) {
 				// and not already added to unitsOnScreen, add it!
 				if(!onScreen) {
-					Mouse.unitsOnScreen.Add (this.gameObject);
+					player.mouse.unitsOnScreen.Add (this.gameObject);
 					onScreen = true;
 				}
 			} else {
@@ -53,7 +49,7 @@ public class PlayerObject : WorldObject {
 				
 				// remove if previously on the screen
 				if(onScreen) {
-					Mouse.RemoveFromOnScreenUnits(this.gameObject);
+					player.mouse.RemoveFromOnScreenUnits(this.gameObject);
 				}
 				
 			}

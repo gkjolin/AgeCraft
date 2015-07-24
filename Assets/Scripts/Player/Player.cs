@@ -1,46 +1,52 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using RTS;
 
-public class Player : MonoBehaviour {
+public class Player : NetworkBehaviour {
 
 	// Player initialization
-	private MinimapController minimapControl;
-	private HUD hud;
+	public Camera playCam;
+	public Camera miniCam;
+	public MinimapController minimapControl;
+	public PlayerCamera playerCamera;
+	public HUD hud;
+	public UserInput ui;
+	public Mouse mouse;
 
 	// Player materials
 	public int startMaterials;
 	public int startEnergy;
 	private Dictionary< ResourceType, int > resources;
 
-
 	public string username;
 	public bool isHuman;
 
 	void Awake() {
+		playCam = Camera.main.GetComponent<Camera>();
+		miniCam = GameObject.Find("Minimap Camera").gameObject.GetComponent<Camera>();
+
+		// Initialize resources
 		resources = InitResourceList();
+		AddStartResources();
+		hud.SetResourceValues(resources);
 	}
 
 	void Start() {
-		minimapControl = transform.root.GetComponent<MinimapController>();
-		hud = transform.root.GetComponent<HUD>();
 
-		// Initialize resources
-		AddStartResources();
-		hud.SetResourceValues(resources);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (this.isHuman) {
-			minimapControl.ShowMinimap();
-			hud.SetResourceValues(resources);
+		if (this.isHuman && isLocalPlayer) {
+			minimapControl.ShowMinimap ();
+			hud.SetResourceValues (resources);
 		}
 	}
 
 	void OnGUI() {
-		if (this.isHuman) {
+		if (this.isHuman && isLocalPlayer) {
 			minimapControl.RenderViewportBox();
 		}
 	}

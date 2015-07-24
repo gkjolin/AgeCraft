@@ -6,21 +6,17 @@ public class Mouse : MonoBehaviour {
 
 	// Private variables
 	private Player player;
-	private PlayerCamera playerCamera;
-	private Camera pCam;
-	private Camera miniCam;
-	private HUD hud;
 
 	// Ray cast mouse tracker
 	RaycastHit hit;
 	public GameObject target;
 
-	public static Vector3 rightClickPoint;
+	public Vector3 rightClickPoint;
 
 	//	public static GameObject currentlySelectedUnit;
-	public static ArrayList currentlySelectedUnits = new ArrayList (); // of GameObject
-	public static ArrayList unitsOnScreen = new ArrayList (); // of GameObject
-	public static ArrayList unitsInDrag = new ArrayList (); // of GameObject
+	public ArrayList currentlySelectedUnits = new ArrayList (); // of GameObject
+	public ArrayList unitsOnScreen = new ArrayList (); // of GameObject
+	public ArrayList unitsInDrag = new ArrayList (); // of GameObject
 	private bool finishedDragOnThisFrame;
 	private bool startedDrag;
 
@@ -30,15 +26,15 @@ public class Mouse : MonoBehaviour {
 
 	
 	// Dragging variables
-	public static bool userIsDragging;
-	private static float timeLimitBeforeDeclareDrag = 1f;
-	private static float timeLeftBeforeDeclareDrag;
-	private static Vector2 mouseDragStart;
+	public bool userIsDragging;
+	private float timeLimitBeforeDeclareDrag = 1f;
+	private float timeLeftBeforeDeclareDrag;
+	private Vector2 mouseDragStart;
 
 
 	private bool clickedInHUD = false;
-	private static Vector3 mouseDownPoint;
-	private static Vector3 currentMousePoint; // world space
+	private Vector3 mouseDownPoint;
+	private Vector3 currentMousePoint; // world space
 	
 	// GUI
 	public GUIStyle MouseDragSkin;
@@ -47,29 +43,25 @@ public class Mouse : MonoBehaviour {
 	private float boxHeight;
 	private float boxTop;
 	private float boxLeft;
-	private static Vector2 boxStart;
-	private static Vector2 boxFinish;
+	private Vector2 boxStart;
+	private Vector2 boxFinish;
 
 	// Initialize camera
-	void Start() {
-		player = transform.root.GetComponent<Player> ();
-		playerCamera = transform.root.FindChild ("Camera").GetComponent<PlayerCamera> ();
-		pCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
-		miniCam = transform.root.FindChild ("MinimapCamera").GetComponent<Camera> ();
-		hud = transform.root.GetComponent<HUD> ();
+	void Awake() {
+		player = GetComponent<Player> ();
 	}
 
 	#region mouse
 	public void MouseTracker () {
 
 		// Check if right-clicking on minimap
-		if (miniCam.pixelRect.Contains (Input.mousePosition) && !userIsDragging) {
+		if (player.miniCam.pixelRect.Contains (Input.mousePosition) && !userIsDragging) {
 			// Clicking inside minimap viewport
 
 			// Right clicking
 			if(Input.GetMouseButtonDown (1)) {
 				// Run selection methods
-				Ray ray = miniCam.ScreenPointToRay (Input.mousePosition);
+				Ray ray = player.miniCam.ScreenPointToRay (Input.mousePosition);
 				
 				// Allow the user to click anywhere on the terrain to move objects
 				if (Physics.Raycast (ray, out hit, ResourceManager.Raylength, allowTerrainMouseClick)) {
@@ -87,14 +79,14 @@ public class Mouse : MonoBehaviour {
 			} else if(Input.GetMouseButton(0) && clickedInHUD){
 				// Holding mouse in minimap
 
-				Ray ray = miniCam.ScreenPointToRay (Input.mousePosition);
+				Ray ray = player.miniCam.ScreenPointToRay (Input.mousePosition);
 				
 				// Allow the user to click anywhere on the terrain to move objects
 				if (Physics.Raycast (ray, out hit, ResourceManager.Raylength, allowTerrainMouseClick)) {
 
 					// Hitting the ground
 					if (hit.collider.name == "Ground") {
-						playerCamera.MoveCameraToLocation(hit.point);
+						player.playerCamera.MoveCameraToLocation(hit.point);
 					}
 				}
 
@@ -110,7 +102,7 @@ public class Mouse : MonoBehaviour {
 		} else if (!clickedInHUD){
 
 			// Run selection methods
-			Ray ray = pCam.ScreenPointToRay (Input.mousePosition);
+			Ray ray = player.playCam.ScreenPointToRay (Input.mousePosition);
 
 			// Allow the user to click anywhere on the terrain to move objects
 			if (Physics.Raycast (ray, out hit, ResourceManager.Raylength)) {
@@ -244,8 +236,8 @@ public class Mouse : MonoBehaviour {
 		
 		// GUI variables
 		if (userIsDragging) {
-			boxWidth = pCam.WorldToScreenPoint(mouseDownPoint).x - pCam.WorldToScreenPoint(currentMousePoint).x;
-			boxHeight = pCam.WorldToScreenPoint(mouseDownPoint).y - pCam.WorldToScreenPoint(currentMousePoint).y;
+			boxWidth = player.playCam.WorldToScreenPoint(mouseDownPoint).x - player.playCam.WorldToScreenPoint(currentMousePoint).x;
+			boxHeight = player.playCam.WorldToScreenPoint(mouseDownPoint).y - player.playCam.WorldToScreenPoint(currentMousePoint).y;
 			boxLeft = Input.mousePosition.x;
 			boxTop = (Screen.height - Input.mousePosition.y) - boxHeight;
 			
@@ -284,7 +276,7 @@ public class Mouse : MonoBehaviour {
 				PlayerObject unitScript = unitObj.GetComponent<PlayerObject>();
 				GameObject selectedObj = unitObj.transform.FindChild("Selected").gameObject;
 				
-				if(!UnitAlreadyInDraggedUnits(unitObj)) {
+				if(!UnitAlreadyInDraggedUnits(unitObj) && player.Equals(unitScript.player)) {
 					if(UnitInsideDrag(unitScript.screenPos)) {
 						selectedObj.SetActive(true);
 						unitsInDrag.Add (unitObj);
@@ -367,7 +359,7 @@ public class Mouse : MonoBehaviour {
 	}
 	
 	
-	public static void DeselectGameobjectsIfSelected() {
+	public void DeselectGameobjectsIfSelected() {
 		if (currentlySelectedUnits.Count > 0) {
 			for (int i = 0; i < currentlySelectedUnits.Count; i++) {
 				GameObject arrayListUnit = currentlySelectedUnits[i] as GameObject;
@@ -379,7 +371,7 @@ public class Mouse : MonoBehaviour {
 	}
 	
 	// Check if a user is already in the currently selected units arraylist
-	public static bool UnitAlreadyInCurrentlySelectedUnits(GameObject unit) {
+	public bool UnitAlreadyInCurrentlySelectedUnits(GameObject unit) {
 		if (currentlySelectedUnits.Count > 0) {
 			for (int i = 0; i < currentlySelectedUnits.Count; i++) {
 				GameObject arrayListUnit = currentlySelectedUnits[i] as GameObject;
@@ -391,7 +383,7 @@ public class Mouse : MonoBehaviour {
 	}
 	
 	// Remote a unit from the currently selected units arraylist
-	public static void RemoveUnitFromCurrentlySelectedUnits(GameObject unit) {
+	public void RemoveUnitFromCurrentlySelectedUnits(GameObject unit) {
 		if (currentlySelectedUnits.Count > 0) {
 			for (int i = 0; i < currentlySelectedUnits.Count; i++) {
 				GameObject arrayListUnit = currentlySelectedUnits[i] as GameObject;
@@ -405,7 +397,7 @@ public class Mouse : MonoBehaviour {
 	}
 	
 	// Check if a unit is in withing the screen space to deal with mouse drag selecting
-	public static bool UnitsWithinScreenSpace(Vector2 unitScreenPos) {
+	public bool UnitsWithinScreenSpace(Vector2 unitScreenPos) {
 		if(
 			(unitScreenPos.x < Screen.width && unitScreenPos.y < Screen.height) &&
 			(unitScreenPos.x > 0f && unitScreenPos.y > 0f)
@@ -416,7 +408,7 @@ public class Mouse : MonoBehaviour {
 	}
 	
 	// Remove a unit from screen units unitsOnScreen ArrayList
-	public static void RemoveFromOnScreenUnits (GameObject unit) {
+	public void RemoveFromOnScreenUnits (GameObject unit) {
 		for (int i = 0; i < unitsOnScreen.Count; i++) {
 			GameObject unitObj = unitsOnScreen[i] as GameObject;
 			if (unit == unitObj) {
@@ -429,7 +421,7 @@ public class Mouse : MonoBehaviour {
 	}
 	
 	// Is unit inside the drag?
-	public static bool UnitInsideDrag(Vector2 unitScreenPos) {
+	public bool UnitInsideDrag(Vector2 unitScreenPos) {
 		if(
 			(unitScreenPos.x > boxStart.x && unitScreenPos.y < boxStart.y) &&
 			(unitScreenPos.x < boxFinish.x && unitScreenPos.y > boxFinish.y)
@@ -440,7 +432,7 @@ public class Mouse : MonoBehaviour {
 	}
 	
 	// Check if a unit is in unitsInDrag array list
-	public static bool UnitAlreadyInDraggedUnits(GameObject unit) {
+	public bool UnitAlreadyInDraggedUnits(GameObject unit) {
 		if (unitsInDrag.Count > 0) {
 			for (int i = 0; i < unitsInDrag.Count; i++) {
 				GameObject arrayListUnit = unitsInDrag[i] as GameObject;
@@ -452,7 +444,7 @@ public class Mouse : MonoBehaviour {
 	}
 	
 	// take all units from unitsInDrag, into currentlySelectedUnits
-	public static void PutDraggedUnitsInCurrentlySelectedUnits() {
+	public void PutDraggedUnitsInCurrentlySelectedUnits() {
 		if (unitsInDrag.Count > 0) {
 			for (int i = 0; i < unitsInDrag.Count; i++) {
 				GameObject unitObj = unitsInDrag[i] as GameObject;

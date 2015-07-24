@@ -839,22 +839,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!1 &123
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 247}
-  - 119: {fileID: 492}
-  m_Layer: 2
-  m_Name: Shadow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &124
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,18 +1508,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 245}
   m_RootOrder: 11
---- !u!4 &247
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 123}
-  m_LocalRotation: {x: -.705589414, y: -.0463001654, z: .0463001728, w: -.705589294}
-  m_LocalPosition: {x: 0, y: .446803093, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 248}
-  m_RootOrder: 0
 --- !u!4 &248
 Transform:
   m_ObjectHideFlags: 0
@@ -1545,8 +1517,7 @@ Transform:
   m_LocalRotation: {x: 0, y: .0654783249, z: 0, w: -.997853994}
   m_LocalPosition: {x: -13.4894943, y: 2, z: -6.90234137}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 247}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
 --- !u!4 &249
@@ -2953,24 +2924,6 @@ Light:
   m_ShadowAngle: 4.06779671
   m_IndirectIntensity: 1
   m_AreaSize: {x: 1, y: 1}
---- !u!119 &492
-Projector:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 123}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_NearClipPlane: .999852777
-  m_FarClipPlane: 4.15999889
-  m_FieldOfView: 50
-  m_AspectRatio: 1
-  m_Orthographic: 0
-  m_OrthographicSize: 10
-  m_Material: {fileID: 2100000, guid: 9deee521acbe44d5487cbd7a54c06fa7, type: 2}
-  m_IgnoreLayers:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!124 &493
 Behaviour:
   m_ObjectHideFlags: 0
@@ -3026,12 +2979,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   astarData:
-    hasBeenReverted: 0
-    data: 504b0304140000080800aea04246a9e6aca882010000760200000b0024006772617068302e6a736f6e0a0020000000000001001800cebb2c361b3fd001cebb2c361b3fd001c4bb2c361b3fd0017d514d6fe23010fd2bc86783d27c340189d3b28baa5614b5b497d51ec6ce24583876e40f2054fcf73aa174d11e5623cde1cd9b99f7663e48ed4549661f640fd223999124b9cb5336e52c65582244e3b488a1cc8a02339e312c4a72a6c468edfaa615347dcf4a9768577820946cbab647de9470dd4f550b85938d01652b6d1a3aba81e9e81d8d155acda3c91074f4c34be70dce157a6740d2d1da3329f823761bbd4335575ecab062f9f6b0082ba6795cc551c1208bf28add2563cc73c67298a62cc53449a6bd508b60f87603f5a0c9415d63194634705c08eb40f12036a3448a4638db3b3a9259444937e453c8bd59e838d8e0b7026991126f315eacb79d15dc7e836e2bf8eee51fe62df802a5f0811f4fee8b3013b90feef761bd333e50c13bfd24d46e38e5156cc0ee6e7e33ce821addba20f684bfb4796dc1585c1a68b7d78e9b6abcb882225c5d805ca302e92ed6748bea5a569727aeb550ee328c92d2c061294e8db67f8754fa951b44f53cf47e596cc01971fc1619e8bf23fadff8733e7f02504b0304140000080800aea04246e506363f7700000086000000090024006d6574612e6a736f6e0a002000000000000100180018c72c361b3fd00118c72c361b3fd0010ec72c361b3fd0011d8cb10e82301040ffe5666cc0b6a1b03ab81976c2d07227dce095403131c47f97babde1bd77c09bd68da3400b5a59d5a81a0a9856bfcc1bb4d5893be3493d685dd52634633081907c7931eeead13a4776b4811cc25040fa2cf4f02ffa179d4ff393055926d5459674cfdbac4944bac55d52f6cae1fb03504b01022d00140000080800aea04246a9e6aca882010000760200000b00240000000000000000000000000000006772617068302e6a736f6e0a0020000000000001001800cebb2c361b3fd001cebb2c361b3fd001c4bb2c361b3fd001504b01022d00140000080800aea04246e506363f77000000860000000900240000000000000000000000cf0100006d6574612e6a736f6e0a002000000000000100180018c72c361b3fd00118c72c361b3fd0010ec72c361b3fd001504b05060000000002000200b8000000910200000000
+    dataString: UEsDBBQAAAgIAAAIIewo2APtbQEAAEACAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFdUctuwjAQ/BXks0FpHk1A4lRaVLWiCGjva2cTLBw78qMQqv57nSBaVFnaw+zO7Mz6i9RelGT2RT5BeiQzkiR3ecqmnKUMS4RonBYxlFlRYMYzhkVJvikxWruetIKm56x0iXaFR0LJrmt75F0J1z2qWiic7AwoW2nT0NENTEcfaKzQah5NhkdHD146b3Cu0DsDko7WnknBX7Db6QOqufJShhXL9+dFWDHN4yqOCgZZlFfsLhljnjOWwzRlKaZJMu2NWgTD9zuoB08O6hrLINHAaSGsA8WD2YwSKRrhbJ/oRGYRJd1Qz6H2YaHjYEPeCqRFSrzFeLHed1Zw+wu6veCHzb/JW3ADpfBhPp7cF0ETuQ/pP8N6Z3wYBe/0q1CH4ZRXsAF7uPmbcRbc6NYFs2d80mbbgrG4NNDur4ybbry4giJcXYBcowLpLtF0i+raVpdPXGuh3EWMktLAcSnOjbZ/IpXecoOo3gbuEPH7B1BLAwQUAAAICAAACCHsQjM3nXYAAACEAAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAR2MsQ6CMBBA/+VmbIptQ2V1YDPshqHlTrjBK4FiYoz/LnV7w3vvAy9aN04CLRjVKA0VTGtY5g3a+sCd8aA7GFM3Nl7GaCMhBX2y/hzQeU9udJE8wlBBfi90C0/6F33I84MFWSbVJ5bclW3RJCFd0y65eHr4/gBQSwECLQAUAAAICAAACCHsKNgD7W0BAABAAgAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAACCHsQjM3nXYAAACEAAAACQAkAAAAAAAAAAAAAAC6AQAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAHsCAAAAAA==
+    upgradeData: 
     data_backup: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
-    revertData: 
     cacheStartup: 0
   showNavGraphs: 1
   showUnwalkableNodes: 1
@@ -3096,9 +3048,6 @@ MonoBehaviour:
   minAreaSize: 10
   limitGraphUpdates: 1
   maxGraphUpdateFreq: .200000003
-  lastScanTime: .149541005
-  inGameDebugPath: 
-  isScanning: 0
   euclideanEmbedding:
     mode: 0
     seed: 0
@@ -3118,7 +3067,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drawGizmos: 1
   detailedGizmos: 1
-  saveGetNearestHints: 1
   startEndModifier:
     priority: 2
     addPoints: 0
@@ -3129,7 +3077,8 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     useGraphRaycasting: 0
-  traversableTags:
+  traversableTags: -1
+  traversableTagsCompatibility:
     tagsChange: -1
     tagsSet: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -3184,6 +3133,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &31702821
 GameObject:

@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using RTS;
 
-public class PlayerCamera : MonoBehaviour {
+public class PlayerCamera : NetworkBehaviour {
 	
 	private Camera pCam;
 
-	public Terrain worldTerrain;
-	public float worldTerrainPadding = 25f;
+	private Terrain worldTerrain;
+	private float worldTerrainPadding = 25f;
 
 	// box limit struct
 	public struct BoxLimit
@@ -25,7 +26,8 @@ public class PlayerCamera : MonoBehaviour {
 	void Start() {
 
 		// Player camera
-		pCam = transform.root.FindChild ("Camera").GetComponent<Camera> ();
+		worldTerrain = (Terrain)FindObjectOfType (typeof(Terrain));
+		pCam = Camera.main.GetComponent<Camera> ();
 
 		// Declare camera limits
 		cameraLimits.leftLimit = worldTerrain.transform.position.x + worldTerrainPadding;
@@ -46,6 +48,7 @@ public class PlayerCamera : MonoBehaviour {
 		if (CheckIfUserCameraInput ()) {
 			Vector3 cameraDesiredMove = GetDesiredTranslation ();
 
+			Debug.Log (this);
 			if (!IsDesiredPositionOverBoundaries (cameraDesiredMove)) {
 				this.transform.Translate (cameraDesiredMove, Space.World);
 

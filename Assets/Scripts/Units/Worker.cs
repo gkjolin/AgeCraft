@@ -12,8 +12,9 @@ public class Worker : Unit {
 	private Resource resourceDeposit;
 	private Building[] resourceStores;
 
-	public float collectionAmount, depositAmount;
-	private float currentDeposit = 0.0f;
+	private ArrayList ignoredCollisions;
+
+	public float collectionAmount;
 	
 	// Simple move for workers
 	protected bool moving, rotating;
@@ -26,6 +27,7 @@ public class Worker : Unit {
 	
 	protected override void Start () {
 		base.Start();
+		ignoredCollisions = new ArrayList ();;
 	}
 	
 	protected override void Update () {
@@ -78,17 +80,25 @@ public class Worker : Unit {
 		player.AddResource(depositType, (int) currentLoad);
 		currentLoad = 0;
 	}
+
 	
+
+	void OnCollisionEnter(Collision collision) {
+
+		// Rigidbodies colliding with eachother
+		if (harvesting && collision.gameObject.tag == "Worker") {
+			ignoredCollisions.Add(collision);
+			Physics.IgnoreCollision (collision.collider, GetComponent<Collider> (), true);
+		}
+
+	}
+
 	void OnTriggerEnter(Collider other) {
-		
-		if (harvesting && other.gameObject.tag == "Worker") {
-			Physics.IgnoreCollision (other.GetComponent<Collider>(), GetComponent<Collider> (), true);
-		} else if(harvesting && other.gameObject.tag == "Resource") {
+		// Triggers colliding with rigidbodies
+		if(harvesting && other.gameObject.tag == "Resource") {
 			startHarvest = true;
 		} else if(emptying && other.gameObject.tag == "Base") {
 			startEmpty = true;
-		} else if (!harvesting && other.gameObject.tag == "Worker") {
-			Physics.IgnoreCollision (other.GetComponent<Collider>(), GetComponent<Collider> (), false);
 		}
 
 		if (harvesting && other.gameObject.tag == "Resource") {
@@ -136,6 +146,12 @@ public class Worker : Unit {
 		startEmpty = false;
 		moving = false;
 		rotating = false;
+
+		// Re-enable the colliders
+		for (int i = 0; i < ignoredCollisions.Count; i++) {
+			Collision c = ignoredCollisions[i] as Collision;
+			Physics.IgnoreCollision(c.collider, GetComponent<Collider>(), false);
+		}
 	}
 
 	
@@ -148,7 +164,7 @@ public class Worker : Unit {
 	
 	private void MakeMove() {
 		Vector3 moveVector = (destination - transform.position).normalized * moveSpeed;
-		rigidbody.MovePosition (transform.position + moveVector * Time.deltaTime);
+		rb.MovePosition (transform.position + moveVector * Time.deltaTime);
 //		transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime * moveSpeed);
 //		if(transform.position == destination) moving = false;
 	}
