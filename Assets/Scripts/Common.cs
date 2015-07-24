@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using RTS;
 
 public class Common : MonoBehaviour {
 
 	private static Terrain worldTerrain = GameObject.Find ("Ground").GetComponent<Terrain> ();
-	private static Texture2D _staticRectTexture;
-	private static GUIStyle _staticRectStyle;
+	private static Dictionary<Color, Texture2D> staticRectTexture2D = new Dictionary<Color, Texture2D> ();
+	private static Dictionary<Color, GUIStyle> staticRectGUIStyle = new Dictionary<Color, GUIStyle> ();
 
 	// Float to bool
 	public static bool FloatToBool(float val) {
@@ -52,21 +53,28 @@ public class Common : MonoBehaviour {
 	// Note that this function is only meant to be called from OnGUI() functions.
 	public static void GUIDrawRect( Rect position, Color color )
 	{
-		if( _staticRectTexture == null )
+
+		if( ! staticRectTexture2D.ContainsKey(color) )
 		{
-			_staticRectTexture = new Texture2D( 1, 1 );
-			_staticRectTexture.SetPixel( 0, 0, color );
-			_staticRectTexture.Apply();
+			// Create a temporary texture
+			Texture2D tmpTexture = new Texture2D(1, 1);
+			tmpTexture.SetPixel( 0, 0, color );
+			tmpTexture.Apply();
+
+			// Add the new texture
+			staticRectTexture2D.Add(color, tmpTexture);
 		}
 		
-		if( _staticRectStyle == null )
+		if( ! staticRectGUIStyle.ContainsKey(color) )
 		{
-			_staticRectStyle = new GUIStyle();
-			_staticRectStyle.normal.background = _staticRectTexture;
+			GUIStyle tmpStyle = new GUIStyle();
+			tmpStyle.normal.background = staticRectTexture2D[color];
+
+			// Add the new GUIStyle
+			staticRectGUIStyle.Add(color, tmpStyle);
 		}
 		
-		GUI.Box( position, GUIContent.none, _staticRectStyle );
-		
+		GUI.Box( position, GUIContent.none, staticRectGUIStyle[color] );
 		
 	}
 

@@ -61,7 +61,7 @@ public class PlayerObject : WorldObject {
 	protected override void OnGUI() {
 		base.OnGUI();
 
-		if (player.isLocalPlayer || isVisible) {
+//		if (player.isLocalPlayer || isVisible) {
 			// Calculate the screen position of the unit
 			Vector2 xyPos = Common.CalculateMinimapPosFromWorldCoordinate (transform.position);
 		
@@ -85,7 +85,7 @@ public class PlayerObject : WorldObject {
 			} else {
 				GUI.DrawTexture (minimapPosition, minimapUnitTexture);
 			}
-		}
+//		}
 	}
 	
 	public override void ObjectGotRightClicked(Player byPlayer) {
