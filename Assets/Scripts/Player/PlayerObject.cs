@@ -35,7 +35,7 @@ public class PlayerObject : WorldObject {
 		// if unit not selected, get screen space
 		if(!selected) {
 			// track the screen position
-			screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
+			screenPos = player.playCam.WorldToScreenPoint(this.transform.position);
 			
 			// if withing the screen space
 			if(player.mouse.UnitsWithinScreenSpace(screenPos)) {

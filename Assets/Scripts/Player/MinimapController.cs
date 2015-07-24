@@ -4,11 +4,10 @@ using System.Collections;
 using RTS;
 
 public class MinimapController : NetworkBehaviour {
-	
-	private GameObject MinimapCamera;
-	private Resolution ScreenResolution;
 
-	private Camera mainCamera;
+	private Resolution ScreenResolution;
+	
+	private Player player;
 
 	private static Material lineMaterial;
 	private static void CreateLineMaterial() {
@@ -25,16 +24,16 @@ public class MinimapController : NetworkBehaviour {
 		}
 	}
 
-	void Start() {
-		mainCamera = Camera.main.GetComponent<Camera>();
+	void Awake() {
+		player = GetComponent<Player> ();
 	}
 
 	public void RenderViewportBox() {
 
-		Ray topLeftRay = mainCamera.ViewportPointToRay(new Vector3(0, 1, 0));
-		Ray topRightRay = mainCamera.ViewportPointToRay(new Vector3(1, 1, 0));
-		Ray bottomLeftRay = mainCamera.ViewportPointToRay(new Vector3(0, 0, 0));
-		Ray bottomRightRay = mainCamera.ViewportPointToRay(new Vector3(1, 0, 0));
+		Ray topLeftRay = player.playCam.ViewportPointToRay(new Vector3(0, 1, 0));
+		Ray topRightRay = player.playCam.ViewportPointToRay(new Vector3(1, 1, 0));
+		Ray bottomLeftRay = player.playCam.ViewportPointToRay(new Vector3(0, 0, 0));
+		Ray bottomRightRay = player.playCam.ViewportPointToRay(new Vector3(1, 0, 0));
 
 		RaycastHit topLeftHit, topRightHit, bottomLeftHit, bottomRightHit;
 		Vector2 topLeftMinimap, topRightMinimap, bottomLeftMinimap, bottomRightMinimap;
@@ -86,20 +85,18 @@ public class MinimapController : NetworkBehaviour {
 		}
 
 		Screen.SetResolution (ScreenResolution.width, ScreenResolution.height, true);
-		
-		// UI Camera setup
-		MinimapCamera = GameObject.Find("Minimap Camera").gameObject;
-		MinimapCamera.SetActive (true);
-		Camera miniCam = MinimapCamera.GetComponent<Camera>();
-		
+
 		// Adjust the camera to center the map (world coordinates)
 		Vector3 minimapOffset = new Vector3 (0f, 350f, 0f);
-		miniCam.transform.position = minimapOffset;
+		player.miniCam.transform.position = minimapOffset;
+		
+		Debug.Log (player.playCam);
+		Debug.Log (player.miniCam);
 		
 		//		miniCam.orthographicSize = ScreenResolution.height / 2;
 		//		miniCam.orthographic = true;
 		
-		miniCam.rect = new Rect (
+		player.miniCam.rect = new Rect (
 			ResourceManager.MinimapOffsetX,
 			ResourceManager.MinimapOffsetZ,
 			ResourceManager.MinimapSizeX,
@@ -107,12 +104,11 @@ public class MinimapController : NetworkBehaviour {
 			);
 	}
 
-//	public void HideMinimap() {
-//		
-//		MinimapCamera = this.transform.FindChild("MinimapCamera").gameObject;
-//		MinimapCamera.SetActive (false);
-//
-//	}
+	public void HideMinimap() {
+
+		player.miniCam.gameObject.SetActive (false);
+
+	}
 
 //
 //	public GameObject MinimapCamera;

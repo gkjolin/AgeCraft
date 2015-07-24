@@ -27,7 +27,7 @@ public class PlayerCamera : NetworkBehaviour {
 
 		// Player camera
 		worldTerrain = (Terrain)FindObjectOfType (typeof(Terrain));
-		pCam = Camera.main.GetComponent<Camera> ();
+		pCam = GetComponent<Camera> ();
 
 		// Declare camera limits
 		cameraLimits.leftLimit = worldTerrain.transform.position.x + worldTerrainPadding;

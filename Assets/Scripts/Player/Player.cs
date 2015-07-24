@@ -24,22 +24,27 @@ public class Player : NetworkBehaviour {
 	public bool isHuman;
 
 	void Awake() {
-		playCam = Camera.main.GetComponent<Camera>();
-		miniCam = GameObject.Find("Minimap Camera").gameObject.GetComponent<Camera>();
+		playerCamera = transform.FindChild("Main Camera").GetComponent<PlayerCamera>();
+		playCam = transform.FindChild("Main Camera").GetComponent<Camera>();
+		miniCam = transform.FindChild("Minimap Camera").GetComponent<Camera>();
 
 		// Initialize resources
 		resources = InitResourceList();
-		AddStartResources();
-		hud.SetResourceValues(resources);
 	}
 
 	void Start() {
+		AddStartResources();
+		hud.SetResourceValues(resources);
 
+		// Hide the minimap
+		if (!isHuman || !isLocalPlayer) {
+			minimapControl.HideMinimap();
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (this.isHuman && isLocalPlayer) {
+		if (isHuman && isLocalPlayer) {
 			minimapControl.ShowMinimap ();
 			hud.SetResourceValues (resources);
 		}
